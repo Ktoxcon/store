@@ -1,0 +1,8 @@
+{
+  "name": "@store/frontend",
+  "version": "0.1.0",
+  "description": "",
+  "author": "Ktoxcon",
+  "main": "dist/index.js",
+  "scripts": {}
+}

@@ -11,5 +11,6 @@
     "paths": {
       "@store/backend/*": ["./src/*"]
     }
-  }
+  },
+  "exclude": ["src/*.dev.ts"]
 }

@@ -5,14 +5,17 @@
   "author": "Ktoxcon",
   "main": "dist/index.js",
   "scripts": {
-    "start:dev": "ts-node src/index.ts",
+    "start": "node index.js",
+    "start:dev": "ts-node-dev src/app.dev.ts",
     "build": "rimraf dist && tsc"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.2",
+    "dotenv": "^16.4.7",
     "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
   },

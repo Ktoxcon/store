@@ -5,6 +5,7 @@ import {
 } from "@store/lib/validators/address.schemas";
 import { IdParamSchema } from "@store/lib/validators/model.schemas";
 import { Address } from "@store/models/address.model";
+import { User } from "@store/models/user.model";
 import type { Request, Response } from "express";
 import { ZodError } from "zod";
 
@@ -37,6 +38,13 @@ export class AddressesController {
     try {
       const { name, userId, ...restAddressProps } =
         CreateAddressRequestBodySchema.parse(request.body);
+
+      const userExists = await User.findByPk(userId);
+
+      if (!userExists) {
+        response.status(404).send({ success: false, error: "User not found." });
+        return;
+      }
 
       const addressAlreadyExists = await Address.findOne({ where: { name } });
 

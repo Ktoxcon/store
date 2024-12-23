@@ -1,7 +1,13 @@
+import { db } from "@store/lib/db";
 import { DataTypes, Model } from "sequelize";
-import { db } from "../lib/db";
 
-export class Order extends Model {}
+export class Order extends Model {
+  declare id: number;
+  declare confirmed: boolean;
+  declare cancelled: boolean;
+  declare confirmedAt: Date;
+  declare cancelledAt: Date;
+}
 
 Order.init(
   {
@@ -9,6 +15,22 @@ Order.init(
       primaryKey: true,
       autoIncrement: true,
       type: DataTypes.INTEGER,
+    },
+    confirmed: {
+      allowNull: false,
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    cancelled: {
+      allowNull: false,
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    confirmedAt: {
+      type: DataTypes.DATE,
+    },
+    cancelledAt: {
+      type: DataTypes.DATE,
     },
   },
   {

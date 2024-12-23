@@ -9,8 +9,9 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "paths": {
-      "@store/backend/*": ["./src/*"]
+      "@store/*": ["./src/*"]
     }
   },
-  "exclude": ["src/*.dev.ts"]
+  "exclude": ["node_modules"],
+  "include": ["src", "globals.d.ts"]
 }

@@ -2,10 +2,10 @@ import { z } from "zod";
 
 export const IdParamSchema = z.string().nonempty();
 
-export const ActiveSchema = z
+export const StatusSchema = z
   .string()
   .nonempty()
-  .transform((activeString) => {
-    const active = activeString === "true" ? true : false;
-    return active;
+  .transform((statusString) => {
+    const status = statusString === "true" ? true : false;
+    return status;
   });

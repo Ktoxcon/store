@@ -13,13 +13,13 @@ export const CreateAddressRequestBodySchema = z.object({
 });
 
 export const OptionalAddressDataSchema = z.object({
-  name: z.string().optional(),
-  recipient: z.string().optional(),
-  phone: z.string().optional(),
-  addressLine: z.string().optional(),
-  secondAddressLine: z.string().optional(),
-  department: z.string().optional(),
-  township: z.string().optional(),
+  name: z.string().nonempty().optional(),
+  recipient: z.string().nonempty().optional(),
+  phone: z.string().nonempty().optional(),
+  addressLine: z.string().nonempty().optional(),
+  secondAddressLine: z.string().nonempty().optional(),
+  department: z.string().nonempty().optional(),
+  township: z.string().nonempty().optional(),
 });
 
 export const ListAddressesRequestBodySchema = PaginationRequestBody.merge(

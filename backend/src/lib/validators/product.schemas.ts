@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ActiveSchema } from "./model.schemas";
+import { StatusSchema } from "./model.schemas";
 import { PaginationRequestBody } from "./pagination.schemas";
 
 export const ProductPriceSchema = z
@@ -25,7 +25,7 @@ export const OptionalProductDataSchema = z.object({
   description: z.string().nonempty().optional(),
   price: ProductPriceSchema.optional(),
   quantity: ProductQuantitySchema.optional(),
-  active: ActiveSchema.optional(),
+  active: StatusSchema.optional(),
 });
 
 export const ListProductsRequestBodySchema = PaginationRequestBody.merge(

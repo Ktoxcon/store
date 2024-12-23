@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ActiveSchema } from "./model.schemas";
+import { StatusSchema } from "./model.schemas";
 import { PaginationRequestBody } from "./pagination.schemas";
 
 export const CreateCategoryRequestBodySchema = z.object({
@@ -7,7 +7,7 @@ export const CreateCategoryRequestBodySchema = z.object({
 });
 
 export const OptionalCategoryDataSchema = z.object({
-  active: ActiveSchema.optional(),
+  active: StatusSchema.optional(),
   name: z.string().nonempty().optional(),
 });
 

@@ -4,6 +4,7 @@ import {
   ListProductsRequestBodySchema,
   OptionalProductDataSchema,
 } from "@store/lib/validators/product.schemas";
+import { ProductCategory } from "@store/models/product-category.model";
 import { Product } from "@store/models/product.model";
 import type { Request, Response } from "express";
 import { ZodError } from "zod";
@@ -44,6 +45,15 @@ export class ProductsController {
         response
           .status(400)
           .send({ success: false, error: "Product already exists." });
+        return;
+      }
+
+      const categoryExists = await ProductCategory.findByPk(category);
+
+      if (!categoryExists) {
+        response
+          .status(404)
+          .send({ success: false, error: "Product category not found." });
         return;
       }
 

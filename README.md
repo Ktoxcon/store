@@ -6,8 +6,6 @@ This mono-repository contains both the backend and frontend for the "Desafio 360
 
 To run the project correctly, there are a few tools and processes that must be installed and set up. Below is a list of the necessary tools, recommended versions, and required processes:
 
----
-
 ### Tools
 
 - **Terminal**  

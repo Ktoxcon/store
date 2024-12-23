@@ -43,6 +43,26 @@ To run the project correctly, there are a few tools and processes that must be i
 
 Please note that if you do not follow the prerequisites guide, it is likely that any of the project’s applications may not function correctly or may not run at all.
 
+## Running the Project
+
+After installing the required tools and completing the necessary setup, you must install each application's dependencies before running them. To do this, navigate to the project's root directory and run:
+
+```bash
+pnpm install
+```
+
+Once the installation process is complete, you can run the following commands to start each application.
+
+### Backend (Development Mode)
+
+To run the backend in development mode, open your terminal and run:
+
+```bash
+pnpm start:dev
+```
+
+You can execute this command either from the project's root directory or by navigating to the backend folder (where the backend application is located). Make sure you have properly configured any required environment variables in the `.env` file within the backend folder before running the command.
+
 ## FAQ
 
 ### Why a Monorepository?

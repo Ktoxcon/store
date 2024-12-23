@@ -15,10 +15,10 @@ export const CreateOrderItemRequestBodySchema = z.object({
   quantity: OrderItemQuantitySchema,
 });
 
-export const UpdateOrderRequestBodySchema = z.object({
-  quantity: OrderItemQuantitySchema.optional(),
+export const UpdateOrderItemRequestBodySchema = z.object({
+  quantity: OrderItemQuantitySchema,
 });
 
-export const ListOrdersRequestBodySchema = z.object({
+export const ListOrderItemsRequestBodySchema = z.object({
   orderId: z.string().nonempty(),
 });

@@ -11,9 +11,15 @@ OrderItemRoutes.post(
   CustomerMiddleware,
   OrderItemsController.addOrderItems
 );
-OrderItemRoutes.post(
+OrderItemRoutes.delete(
   "/order-item/:id",
   AuthMiddleware,
   CustomerMiddleware,
   OrderItemsController.removeOrderItem
+);
+OrderItemRoutes.patch(
+  "/order-item/:id",
+  AuthMiddleware,
+  CustomerMiddleware,
+  OrderItemsController.updateOrderItem
 );

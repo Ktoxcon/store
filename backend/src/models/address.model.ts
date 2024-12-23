@@ -3,6 +3,7 @@ import { DataTypes, Model } from "sequelize";
 
 export class Address extends Model {
   declare id: number;
+  declare name: string;
   declare recipient: string;
   declare phone: string;
   declare addressLine: string;
@@ -18,6 +19,10 @@ Address.init(
       allowNull: false,
       autoIncrement: true,
       type: DataTypes.INTEGER,
+    },
+    name: {
+      allowNull: false,
+      type: DataTypes.STRING,
     },
     recipient: {
       allowNull: false,

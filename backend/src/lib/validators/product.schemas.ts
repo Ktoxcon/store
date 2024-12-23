@@ -2,8 +2,6 @@ import { z } from "zod";
 import { ActiveSchema } from "./model.schemas";
 import { PaginationRequestBody } from "./pagination.schemas";
 
-export const ProductyIdParamSchema = z.string().nonempty();
-
 export const ProductPriceSchema = z
   .string()
   .refine((priceString) => Number(priceString));

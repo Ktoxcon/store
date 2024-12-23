@@ -49,7 +49,12 @@ export class OrdersController {
         return;
       }
 
-      const addressExists = await Address.findByPk(addressId);
+      const addressExists = await Address.findOne({
+        where: {
+          id: addressId,
+          UserId: userId,
+        },
+      });
 
       if (!addressExists) {
         response
@@ -140,7 +145,7 @@ export class OrdersController {
     }
   }
 
-  static async cancellOrder(request: Request, response: Response) {
+  static async cancelOrder(request: Request, response: Response) {
     try {
       const id = IdParamSchema.parse(request.params.id);
 

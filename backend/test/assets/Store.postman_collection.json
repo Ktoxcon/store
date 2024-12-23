@@ -20,7 +20,7 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "samse@protonmail.com",
+									"value": "elliot@protonmail.com",
 									"type": "text"
 								},
 								{
@@ -65,7 +65,7 @@
 								},
 								{
 									"key": "email",
-									"value": "samse@protonmail.com",
+									"value": "elliot@protonmail.com",
 									"type": "text"
 								},
 								{
@@ -116,6 +116,57 @@
 									"key": "id",
 									"value": "1"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Product Categories",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "limit",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "offset",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "Sodas",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "active",
+									"value": "false",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:{{port}}/category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port}}",
+							"path": [
+								"category"
 							]
 						}
 					},
@@ -207,57 +258,6 @@
 									"key": "id",
 									"value": ""
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "List Product Categories",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "limit",
-									"value": "1",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "offset",
-									"value": "1",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "name",
-									"value": "Sodas",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "active",
-									"value": "false",
-									"type": "text",
-									"disabled": true
-								}
-							]
-						},
-						"url": {
-							"raw": "http://localhost:{{port}}/category",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{port}}",
-							"path": [
-								"category"
 							]
 						}
 					},
@@ -457,12 +457,337 @@
 			]
 		},
 		{
-			"name": "Orders",
-			"item": []
+			"name": "Addresses",
+			"item": [
+				{
+					"name": "Get Address",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{port}}/address/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port}}",
+							"path": [
+								"address",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Address",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Some",
+									"type": "text"
+								},
+								{
+									"key": "recipient",
+									"value": "Sam Sepiol",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "+50267474",
+									"type": "text"
+								},
+								{
+									"key": "addressLine",
+									"value": "30 Av. 2-47 zona 7 condominio Adhara",
+									"type": "text"
+								},
+								{
+									"key": "department",
+									"value": "Guatemala",
+									"type": "text"
+								},
+								{
+									"key": "township",
+									"value": "Guatemala",
+									"type": "text"
+								},
+								{
+									"key": "userId",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:{{port}}/address",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port}}",
+							"path": [
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Address",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Home",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:{{port}}/address/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port}}",
+							"path": [
+								"address",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Addresses",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "limit",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "offset",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:{{port}}/address",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port}}",
+							"path": [
+								"address"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
-			"name": "Addresses",
-			"item": []
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Get Order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{port}}/order/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port}}",
+							"path": [
+								"order",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "userId",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "addressId",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:{{port}}/order",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port}}",
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm Order",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "confirmed",
+									"value": "false",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:{{port}}/order/:id/confirmation",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port}}",
+							"path": [
+								"order",
+								":id",
+								"confirmation"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Order",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:{{port}}/order/:id/cancellation",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port}}",
+							"path": [
+								"order",
+								":id",
+								"cancellation"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "addressId",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:{{port}}/order/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port}}",
+							"path": [
+								"order",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Order Items",

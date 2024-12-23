@@ -17,7 +17,7 @@ OrderRoutes.patch(
   "/order/:id/cancellation",
   AuthMiddleware,
   CustomerMiddleware,
-  OrdersController.cancellOrder
+  OrdersController.cancelOrder
 );
 OrderRoutes.patch(
   "/order/:id/confirmation",

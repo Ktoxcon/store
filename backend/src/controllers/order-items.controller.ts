@@ -1,3 +1,4 @@
+import { IdParamSchema } from "@store/lib/validators/model.schemas";
 import { CreateOrderItemRequestBodySchema } from "@store/lib/validators/order-item.schemas";
 import { OrderItem } from "@store/models/order-item.model";
 import { Order } from "@store/models/order.model";
@@ -29,10 +30,10 @@ export class OrderItemsController {
         return;
       }
 
-      if (product.quantity < quantity) {
+      if (quantity > product.quantity) {
         response.status(400).send({
           success: false,
-          error: "Product stock availability exceeded.",
+          error: "Requested quantity exceeds available stock.",
         });
         return;
       }
@@ -44,6 +45,32 @@ export class OrderItemsController {
       });
 
       response.send({ success: true, data: newOrderItem });
+    } catch (error) {
+      if (error instanceof Error) {
+        const errorDetails =
+          error instanceof ZodError ? error.flatten() : error.message;
+
+        response.status(400).send({ success: false, error: errorDetails });
+      }
+    }
+  }
+
+  static async removeOrderItem(request: Request, response: Response) {
+    try {
+      const id = IdParamSchema.parse(request.params.id);
+
+      const orderItem = await OrderItem.findByPk(id);
+
+      if (!orderItem) {
+        response
+          .status(404)
+          .send({ success: false, error: "Order item not found." });
+        return;
+      }
+
+      await OrderItem.destroy({ where: { id } });
+
+      response.send({ success: true });
     } catch (error) {
       if (error instanceof Error) {
         const errorDetails =

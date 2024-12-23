@@ -1,1 +1,56 @@
-export class OrderItemsController {}
+import { CreateOrderItemRequestBodySchema } from "@store/lib/validators/order-item.schemas";
+import { OrderItem } from "@store/models/order-item.model";
+import { Order } from "@store/models/order.model";
+import { Product } from "@store/models/product.model";
+import type { Request, Response } from "express";
+import { ZodError } from "zod";
+
+export class OrderItemsController {
+  static async addOrderItems(request: Request, response: Response) {
+    try {
+      const { orderId, productId, quantity } =
+        CreateOrderItemRequestBodySchema.parse(request.body);
+
+      const orderExists = await Order.findByPk(orderId);
+
+      if (!orderExists) {
+        response
+          .status(404)
+          .send({ success: false, error: "Order not found." });
+        return;
+      }
+
+      const product = await Product.findByPk(productId);
+
+      if (!product) {
+        response
+          .status(404)
+          .send({ success: false, error: "Product not found." });
+        return;
+      }
+
+      if (product.quantity < quantity) {
+        response.status(400).send({
+          success: false,
+          error: "Product stock availability exceeded.",
+        });
+        return;
+      }
+
+      const newOrderItem = await OrderItem.create({
+        quantity,
+        OrderId: orderId,
+        ProductId: productId,
+      });
+
+      response.send({ success: true, data: newOrderItem });
+    } catch (error) {
+      if (error instanceof Error) {
+        const errorDetails =
+          error instanceof ZodError ? error.flatten() : error.message;
+
+        response.status(400).send({ success: false, error: errorDetails });
+      }
+    }
+  }
+}

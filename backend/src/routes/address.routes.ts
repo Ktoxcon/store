@@ -6,29 +6,29 @@ import express from "express";
 export const AddressRoutes = express();
 
 AddressRoutes.get(
-  "/address/:id",
+  "/addresses/:id",
   AuthMiddleware,
   AddressesController.getAddress
 );
 AddressRoutes.post(
-  "/address",
+  "/addresses",
   AuthMiddleware,
   CustomerMiddleware,
   AddressesController.createAddress
 );
 AddressRoutes.patch(
-  "/address/:id",
+  "/addresses/:id",
   AuthMiddleware,
   CustomerMiddleware,
   AddressesController.updateAddress
 );
 AddressRoutes.get(
-  "/address",
+  "/addresses",
   AuthMiddleware,
   AddressesController.listAddresses
 );
 AddressRoutes.delete(
-  "/address/:id",
+  "/addresses/:id",
   AuthMiddleware,
   CustomerMiddleware,
   AddressesController.listAddresses

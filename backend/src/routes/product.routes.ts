@@ -7,27 +7,27 @@ import express from "express";
 export const ProductRoutes = express();
 
 ProductRoutes.get(
-  "/product/:id",
+  "/products/:id",
   AuthMiddleware,
   ProductsController.getProduct
 );
 ProductRoutes.post(
-  "/product",
+  "/products",
   AuthMiddleware,
   AdminMiddleware,
   ProductsController.createProduct
 );
 ProductRoutes.post(
-  "/product/:id",
+  "/products/:id",
   AuthMiddleware,
   AdminMiddleware,
   FileUploadMiddleware,
   ProductsController.addProductPicture
 );
 ProductRoutes.patch(
-  "/product/:id",
+  "/products/:id",
   AuthMiddleware,
   AdminMiddleware,
   ProductsController.updateProduct
 );
-ProductRoutes.get("/product", AuthMiddleware, ProductsController.listProducts);
+ProductRoutes.get("/products", AuthMiddleware, ProductsController.listProducts);

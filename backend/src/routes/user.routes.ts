@@ -6,25 +6,25 @@ import express from "express";
 export const UserRoutes = express();
 
 UserRoutes.get(
-  "/user/:id",
+  "/users/:id",
   AuthMiddleware,
   AdminMiddleware,
   UsersController.getUser
 );
 UserRoutes.post(
-  "/user",
+  "/users",
   AuthMiddleware,
   AdminMiddleware,
   UsersController.createUser
 );
 UserRoutes.patch(
-  "/user",
+  "/users/:id",
   AuthMiddleware,
   AdminMiddleware,
   UsersController.updateUser
 );
 UserRoutes.get(
-  "/user",
+  "/users",
   AuthMiddleware,
   AdminMiddleware,
   UsersController.listUsers

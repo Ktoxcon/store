@@ -5,20 +5,14 @@ import express from "express";
 
 export const OrderItemRoutes = express();
 
-OrderItemRoutes.post(
-  "/order-item",
-  AuthMiddleware,
-  CustomerMiddleware,
-  OrderItemsController.addOrderItems
-);
 OrderItemRoutes.delete(
-  "/order-item/:id",
+  "/order-items/:id",
   AuthMiddleware,
   CustomerMiddleware,
   OrderItemsController.removeOrderItem
 );
 OrderItemRoutes.patch(
-  "/order-item/:id",
+  "/order-items/:id",
   AuthMiddleware,
   CustomerMiddleware,
   OrderItemsController.updateOrderItem

@@ -6,25 +6,25 @@ import express from "express";
 export const ProductCategoryRoutes = express();
 
 ProductCategoryRoutes.get(
-  "/category/:id",
+  "/categories/:id",
   AuthMiddleware,
   AdminMiddleware,
   ProductCategoriesController.getCategory
 );
 ProductCategoryRoutes.post(
-  "/category",
+  "/categories",
   AuthMiddleware,
   AdminMiddleware,
   ProductCategoriesController.createCategory
 );
 ProductCategoryRoutes.patch(
-  "/category/:id",
+  "/categories/:id",
   AuthMiddleware,
   AdminMiddleware,
   ProductCategoriesController.updateCategory
 );
 ProductCategoryRoutes.get(
-  "/category",
+  "/categories",
   AuthMiddleware,
   ProductCategoriesController.listCategories
 );

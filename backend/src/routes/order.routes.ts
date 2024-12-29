@@ -6,23 +6,23 @@ import express from "express";
 
 export const OrderRoutes = express();
 
-OrderRoutes.get("/order/:id", AuthMiddleware, OrdersController.getOrder);
+OrderRoutes.get("/orders/:id", AuthMiddleware, OrdersController.getOrder);
 OrderRoutes.post(
-  "/order",
+  "/orders",
   AuthMiddleware,
   CustomerMiddleware,
   OrdersController.createOrder
 );
 OrderRoutes.patch(
-  "/order/:id/cancellation",
+  "/orders/:id/cancellation",
   AuthMiddleware,
   CustomerMiddleware,
   OrdersController.cancelOrder
 );
 OrderRoutes.patch(
-  "/order/:id/confirmation",
+  "/orders/:id/confirmation",
   AuthMiddleware,
   AdminMiddleware,
   OrdersController.updateOrderConfirmationStatus
 );
-OrderRoutes.get("/order", AuthMiddleware, OrdersController.listOrders);
+OrderRoutes.get("/orders", AuthMiddleware, OrdersController.listOrders);

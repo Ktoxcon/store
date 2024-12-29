@@ -4,8 +4,9 @@ import { DataTypes, Model } from "sequelize";
 export class OrderItem extends Model {
   declare id: number;
   declare quantity: number;
-  declare OrderId: string;
-  declare ProductId: string;
+  declare unitPrice: number;
+  declare orderId: string;
+  declare productId: string;
 }
 
 OrderItem.init(
@@ -19,6 +20,10 @@ OrderItem.init(
     quantity: {
       allowNull: false,
       type: DataTypes.INTEGER,
+    },
+    unitPrice: {
+      allowNull: false,
+      type: DataTypes.FLOAT,
     },
   },
   {

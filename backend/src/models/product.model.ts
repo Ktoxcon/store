@@ -9,6 +9,7 @@ export class Product extends Model {
   declare quantity: number;
   declare active?: boolean;
   declare picture?: string;
+  declare categoryId: string;
 }
 
 Product.init(

@@ -72,7 +72,7 @@ export class OrderItemsController {
         return;
       }
 
-      const product = await Product.findByPk(orderItem.ProductId);
+      const product = await Product.findByPk(orderItem.productId);
 
       if (!product) {
         response

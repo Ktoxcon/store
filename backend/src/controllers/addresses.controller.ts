@@ -58,7 +58,7 @@ export class AddressesController {
       const newAddress = await Address.create({
         ...restAddressProps,
         name,
-        UserId: userId,
+        userId,
       });
 
       response.send({ success: true, data: newAddress });

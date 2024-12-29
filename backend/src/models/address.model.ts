@@ -10,6 +10,7 @@ export class Address extends Model {
   declare secondAddressLine?: string;
   declare department: string;
   declare township: string;
+  declare userId: string;
 }
 
 Address.init(

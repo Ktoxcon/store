@@ -1,5 +1,6 @@
 import AppConfig from "@store/config/app.config";
-import { DayInMilliseconds } from "@store/constants/time";
+import { DayInMilliseconds } from "@store/lib/constants/time";
+import { encodeData } from "@store/lib/encode";
 import {
   SignInRequestBodySchema,
   SignUpRequestBodySchema,
@@ -13,6 +14,7 @@ import { ZodError } from "zod";
 export class AuthController {
   static async signUp(request: Request, response: Response) {
     try {
+      console.dir(request.body);
       const { email, password, ...restUserProps } =
         SignUpRequestBodySchema.parse(request.body);
 
@@ -87,13 +89,32 @@ export class AuthController {
         maxAge: DayInMilliseconds,
       });
 
-      response.send({ success: true, data: { ...restUserProps } });
+      response.cookie("profile", encodeData(restUserProps), {
+        sameSite: true,
+        httpOnly: true,
+        maxAge: DayInMilliseconds,
+      });
+
+      response.send({ success: true });
     } catch (error: unknown) {
       if (error instanceof Error) {
         const errorDetails =
           error instanceof ZodError ? error.flatten() : error.message;
 
         response.status(400).send({ success: false, error: errorDetails });
+      }
+    }
+  }
+
+  static async signOut(_request: Request, response: Response) {
+    try {
+      response.clearCookie("session");
+      response.clearCookie("profile");
+
+      response.send({ success: true });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        response.status(500).send({ success: false, error: error.message });
       }
     }
   }

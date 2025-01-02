@@ -1,4 +1,4 @@
-import { UserRoles } from "@store/constants/roles";
+import { UserRoles } from "@store/lib/constants/roles";
 import { NextFunction, Request, Response } from "express";
 import { JwtPayload } from "jsonwebtoken";
 

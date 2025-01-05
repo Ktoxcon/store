@@ -5,9 +5,11 @@ import {
   Flex,
   IconButton,
   Table,
+  Text,
   Tooltip,
 } from "@radix-ui/themes";
 import routes from "@store/lib/constants/routes";
+import { CurrencyFormatter } from "@store/lib/fomatters/currency";
 import type { Product } from "@store/lib/types/product";
 import { AppLink } from "../ui/app-link";
 import { DeleteProductForm } from "./delete-product-form";
@@ -21,10 +23,17 @@ export function ProductsList({ products }: ProductsListProps) {
     <Table.Root variant="surface">
       <Table.Header>
         <Table.Row>
-          <Table.ColumnHeaderCell>Name</Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell>
+            <Text wrap="pretty">Name</Text>
+          </Table.ColumnHeaderCell>
           <Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell>Creation Date</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell>Last Update Date</Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell>Price</Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell>
+            <Text truncate>Creation Date</Text>
+          </Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell>
+            <Text truncate>Last Update Date</Text>
+          </Table.ColumnHeaderCell>
           <Table.ColumnHeaderCell>Actions</Table.ColumnHeaderCell>
         </Table.Row>
       </Table.Header>
@@ -34,7 +43,9 @@ export function ProductsList({ products }: ProductsListProps) {
           products.map((product) => {
             return (
               <Table.Row key={product.id}>
-                <Table.RowHeaderCell>{product.name}</Table.RowHeaderCell>
+                <Table.RowHeaderCell>
+                  <Text truncate>{product.name}</Text>
+                </Table.RowHeaderCell>
                 <Table.Cell>
                   {product.active ? (
                     <Badge color="green">Active</Badge>
@@ -43,10 +54,19 @@ export function ProductsList({ products }: ProductsListProps) {
                   )}
                 </Table.Cell>
                 <Table.Cell>
-                  {new Date(product.createdAt).toLocaleString()}
+                  <Text truncate>
+                    {CurrencyFormatter.format(product.price)}
+                  </Text>
                 </Table.Cell>
                 <Table.Cell>
-                  {new Date(product.updatedAt).toLocaleString()}
+                  <Text truncate>
+                    {new Date(product.createdAt).toLocaleString()}
+                  </Text>
+                </Table.Cell>
+                <Table.Cell>
+                  <Text truncate>
+                    {new Date(product.updatedAt).toLocaleString()}
+                  </Text>
                 </Table.Cell>
                 <Table.Cell>
                   <Flex align="center" gap="4">

@@ -5,6 +5,7 @@ import {
   Flex,
   IconButton,
   Table,
+  Text,
   Tooltip,
 } from "@radix-ui/themes";
 import routes from "@store/lib/constants/routes";
@@ -23,8 +24,12 @@ export function CategoriesList({ categories }: CategoriesListProps) {
         <Table.Row>
           <Table.ColumnHeaderCell>Name</Table.ColumnHeaderCell>
           <Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell>Creation Date</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell>Last Update Date</Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell>
+            <Text truncate>Creation Date</Text>
+          </Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell>
+            <Text truncate>Last Update Date</Text>
+          </Table.ColumnHeaderCell>
           <Table.ColumnHeaderCell>Actions</Table.ColumnHeaderCell>
         </Table.Row>
       </Table.Header>
@@ -34,7 +39,9 @@ export function CategoriesList({ categories }: CategoriesListProps) {
           categories.map((category) => {
             return (
               <Table.Row key={category.id}>
-                <Table.RowHeaderCell>{category.name}</Table.RowHeaderCell>
+                <Table.RowHeaderCell>
+                  <Text truncate>{category.name}</Text>
+                </Table.RowHeaderCell>
                 <Table.Cell>
                   {category.active ? (
                     <Badge color="green">Active</Badge>
@@ -43,10 +50,14 @@ export function CategoriesList({ categories }: CategoriesListProps) {
                   )}
                 </Table.Cell>
                 <Table.Cell>
-                  {new Date(category.createdAt).toLocaleString()}
+                  <Text truncate>
+                    {new Date(category.createdAt).toLocaleString()}
+                  </Text>
                 </Table.Cell>
                 <Table.Cell>
-                  {new Date(category.updatedAt).toLocaleString()}
+                  <Text truncate>
+                    {new Date(category.updatedAt).toLocaleString()}
+                  </Text>
                 </Table.Cell>
                 <Table.Cell>
                   <Flex align="center" gap="4">

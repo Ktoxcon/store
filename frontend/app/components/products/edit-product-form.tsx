@@ -28,7 +28,7 @@ export function EditProductForm({ product }: EditProductFormProps) {
         <Box>
           <label htmlFor="category">
             <Text as="div" size="2" mb="1" weight="bold">
-              Editing Product: {product.name}
+              Category
             </Text>
           </label>
           <CategoriesSelector

@@ -1,5 +1,5 @@
 import { AppProvider } from "./app.provider";
-import { ThemeProvider } from "./theme.provider";
+import { AppThemeProvider } from "./theme.provider";
 import { ToastProvider } from "./toast.provider";
 
 export function Providers({
@@ -8,10 +8,10 @@ export function Providers({
   children: React.ReactNode;
 }>) {
   return (
-    <ThemeProvider>
+    <AppThemeProvider>
       <ToastProvider>
         <AppProvider>{children}</AppProvider>
       </ToastProvider>
-    </ThemeProvider>
+    </AppThemeProvider>
   );
 }

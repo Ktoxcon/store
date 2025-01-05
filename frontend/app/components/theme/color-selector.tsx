@@ -1,9 +1,9 @@
 import { Select } from "@radix-ui/themes";
 import { themePropDefs, type ThemeOwnProps } from "@radix-ui/themes/props";
-import { useTheme } from "@store/lib/hooks/use-theme-context";
+import { useAppTheme } from "@store/lib/hooks/use-app-theme";
 
 export function ColorSelector() {
-  const { color, setColor } = useTheme();
+  const { color, setColor } = useAppTheme();
 
   const handleValueChange = (color: string) => {
     setColor(color as ThemeOwnProps["accentColor"]);

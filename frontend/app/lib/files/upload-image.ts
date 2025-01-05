@@ -6,19 +6,22 @@ export type UploadImageArgs = {
 };
 
 export async function uploadImage({ fileName, formData }: UploadImageArgs) {
+  const file = formData.get(fileName) as File;
+
+  if (!file || file.size === 0) {
+    return;
+  }
+
+  if (!(file instanceof File)) {
+    throw new TypeError("Image should be a instance of File");
+  }
+
+  console.log("Here");
   cloudinary.config({
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   });
-
-  const file = formData.get(fileName);
-
-  if (!file || !(file instanceof File)) {
-    throw new Error(
-      `File with name ${fileName} was not found in request body.`
-    );
-  }
 
   const buffer = await file.bytes();
 

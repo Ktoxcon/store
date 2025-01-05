@@ -17,13 +17,17 @@ export function EditProductForm({ product }: EditProductFormProps) {
   const categories = useRouteLoaderData<List<ProductCategory>>(
     "routes/admin.products"
   );
-  const { register, control, formState } = useForm({
+  const { control, register, formState } = useForm({
     mode: "onChange",
     resolver: zodResolver(EditProductFormSchema),
   });
 
   return (
-    <Form method="PATCH" action={routes.admin.product(product.id)}>
+    <Form
+      method="PATCH"
+      encType="multipart/form-data"
+      action={routes.admin.product(product.id)}
+    >
       <Flex gap="3" direction="column">
         <Box>
           <label htmlFor="category">
@@ -125,7 +129,6 @@ export function EditProductForm({ product }: EditProductFormProps) {
               Cancel
             </AppLink>
           </Button>
-
           <Button
             type="submit"
             loading={navigation.state === "submitting"}

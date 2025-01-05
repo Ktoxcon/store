@@ -25,4 +25,10 @@ export const CreateProductFormSchema = z.object({
   categoryId: z.string().nonempty({ message: "Product category is required." }),
 });
 
-export const EditProductFormSchema = CreateProductFormSchema.partial();
+export const EditProductFormSchema = CreateProductFormSchema.omit({
+  picture: true,
+})
+  .extend({
+    picture: ProductImageSchema.innerType(),
+  })
+  .partial();

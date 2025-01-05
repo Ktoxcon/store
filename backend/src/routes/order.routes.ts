@@ -2,27 +2,30 @@ import { OrdersController } from "@store/controllers/orders.controller";
 import { AdminMiddleware } from "@store/middleware/admin.middleware";
 import { AuthMiddleware } from "@store/middleware/auth.middleware";
 import { CustomerMiddleware } from "@store/middleware/customer.middleware";
-import express from "express";
+import { UrlEncodedMiddleware } from "@store/middleware/url-encoded.middleware";
+import { Router } from "express";
 
-export const OrderRoutes = express();
+export const OrderRoutes = Router();
 
-OrderRoutes.get("/orders/:id", AuthMiddleware, OrdersController.getOrder);
+OrderRoutes.use(UrlEncodedMiddleware);
+
+OrderRoutes.get("/", AuthMiddleware, OrdersController.listOrders);
+OrderRoutes.get("/:id", AuthMiddleware, OrdersController.getOrder);
 OrderRoutes.post(
-  "/orders",
+  "/",
   AuthMiddleware,
   CustomerMiddleware,
   OrdersController.createOrder
 );
 OrderRoutes.patch(
-  "/orders/:id/cancellation",
+  "/:id/cancellation",
   AuthMiddleware,
   CustomerMiddleware,
   OrdersController.cancelOrder
 );
 OrderRoutes.patch(
-  "/orders/:id/confirmation",
+  "/:id/confirmation",
   AuthMiddleware,
   AdminMiddleware,
   OrdersController.updateOrderConfirmationStatus
 );
-OrderRoutes.get("/orders", AuthMiddleware, OrdersController.listOrders);

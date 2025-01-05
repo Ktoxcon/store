@@ -1,8 +1,11 @@
 import { UsersController } from "@store/controllers/users.controller";
 import { AuthMiddleware } from "@store/middleware/auth.middleware";
-import express from "express";
+import { UrlEncodedMiddleware } from "@store/middleware/url-encoded.middleware";
+import { Router } from "express";
 
-export const ProfileRoutes = express();
+export const ProfileRoutes = Router();
 
-ProfileRoutes.get("/profile/:id", AuthMiddleware, UsersController.getUser);
-ProfileRoutes.patch("/profile", AuthMiddleware, UsersController.updateUser);
+ProfileRoutes.use(UrlEncodedMiddleware);
+
+ProfileRoutes.get("/:id", AuthMiddleware, UsersController.getUser);
+ProfileRoutes.patch("/", AuthMiddleware, UsersController.updateUser);

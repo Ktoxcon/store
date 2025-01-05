@@ -1,31 +1,29 @@
 import { UsersController } from "@store/controllers/users.controller";
 import { AdminMiddleware } from "@store/middleware/admin.middleware";
 import { AuthMiddleware } from "@store/middleware/auth.middleware";
-import express from "express";
+import { UrlEncodedMiddleware } from "@store/middleware/url-encoded.middleware";
+import { Router } from "express";
 
-export const UserRoutes = express();
+export const UserRoutes = Router();
+
+UserRoutes.use(UrlEncodedMiddleware);
 
 UserRoutes.get(
-  "/users/:id",
+  "/:id",
   AuthMiddleware,
   AdminMiddleware,
   UsersController.getUser
 );
 UserRoutes.post(
-  "/users",
+  "/",
   AuthMiddleware,
   AdminMiddleware,
   UsersController.createUser
 );
 UserRoutes.patch(
-  "/users/:id",
+  "/:id",
   AuthMiddleware,
   AdminMiddleware,
   UsersController.updateUser
 );
-UserRoutes.get(
-  "/users",
-  AuthMiddleware,
-  AdminMiddleware,
-  UsersController.listUsers
-);
+UserRoutes.get("/", AuthMiddleware, AdminMiddleware, UsersController.listUsers);

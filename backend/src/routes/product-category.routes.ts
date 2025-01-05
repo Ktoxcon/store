@@ -1,36 +1,39 @@
 import { ProductCategoriesController } from "@store/controllers/product-categories.controller";
 import { AdminMiddleware } from "@store/middleware/admin.middleware";
 import { AuthMiddleware } from "@store/middleware/auth.middleware";
-import express from "express";
+import { UrlEncodedMiddleware } from "@store/middleware/url-encoded.middleware";
+import { Router } from "express";
 
-export const ProductCategoryRoutes = express();
+export const ProductCategoryRoutes = Router();
+
+ProductCategoryRoutes.use(UrlEncodedMiddleware);
 
 ProductCategoryRoutes.get(
-  "/categories/:id",
+  "/:id",
   AuthMiddleware,
   AdminMiddleware,
   ProductCategoriesController.getCategory
 );
 ProductCategoryRoutes.post(
-  "/categories",
+  "/",
   AuthMiddleware,
   AdminMiddleware,
   ProductCategoriesController.createCategory
 );
 ProductCategoryRoutes.patch(
-  "/categories/:id",
+  "/:id",
   AuthMiddleware,
   AdminMiddleware,
   ProductCategoriesController.updateCategory
 );
 ProductCategoryRoutes.delete(
-  "/categories/:id",
+  "/:id",
   AuthMiddleware,
   AdminMiddleware,
   ProductCategoriesController.deleteCategory
 );
 ProductCategoryRoutes.get(
-  "/categories",
+  "/",
   AuthMiddleware,
   ProductCategoriesController.listCategories
 );

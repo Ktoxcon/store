@@ -1,34 +1,29 @@
 import { AddressesController } from "@store/controllers/addresses.controller";
 import { AuthMiddleware } from "@store/middleware/auth.middleware";
 import { CustomerMiddleware } from "@store/middleware/customer.middleware";
-import express from "express";
+import { UrlEncodedMiddleware } from "@store/middleware/url-encoded.middleware";
+import { Router } from "express";
 
-export const AddressRoutes = express();
+export const AddressRoutes = Router();
 
-AddressRoutes.get(
-  "/addresses/:id",
-  AuthMiddleware,
-  AddressesController.getAddress
-);
+AddressRoutes.use(UrlEncodedMiddleware);
+
+AddressRoutes.get("/:id", AuthMiddleware, AddressesController.getAddress);
+AddressRoutes.get("/", AuthMiddleware, AddressesController.listAddresses);
 AddressRoutes.post(
-  "/addresses",
+  "/",
   AuthMiddleware,
   CustomerMiddleware,
   AddressesController.createAddress
 );
 AddressRoutes.patch(
-  "/addresses/:id",
+  "/:id",
   AuthMiddleware,
   CustomerMiddleware,
   AddressesController.updateAddress
 );
-AddressRoutes.get(
-  "/addresses",
-  AuthMiddleware,
-  AddressesController.listAddresses
-);
 AddressRoutes.delete(
-  "/addresses/:id",
+  "/:id",
   AuthMiddleware,
   CustomerMiddleware,
   AddressesController.listAddresses

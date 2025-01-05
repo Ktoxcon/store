@@ -1,18 +1,21 @@
 import { OrderItemsController } from "@store/controllers/order-items.controller";
 import { AuthMiddleware } from "@store/middleware/auth.middleware";
 import { CustomerMiddleware } from "@store/middleware/customer.middleware";
-import express from "express";
+import { UrlEncodedMiddleware } from "@store/middleware/url-encoded.middleware";
+import { Router } from "express";
 
-export const OrderItemRoutes = express();
+export const OrderItemRoutes = Router();
+
+OrderItemRoutes.use(UrlEncodedMiddleware);
 
 OrderItemRoutes.delete(
-  "/order-items/:id",
+  "/:id",
   AuthMiddleware,
   CustomerMiddleware,
   OrderItemsController.removeOrderItem
 );
 OrderItemRoutes.patch(
-  "/order-items/:id",
+  "/:id",
   AuthMiddleware,
   CustomerMiddleware,
   OrderItemsController.updateOrderItem

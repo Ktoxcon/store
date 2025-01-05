@@ -1,20 +1,22 @@
 import AppConfig from "@store/config/app.config";
 import { DayInMilliseconds } from "@store/lib/constants/time";
+import { sendPasswordSetUpEmail } from "@store/lib/emails";
 import { encodeData } from "@store/lib/encode";
 import {
+  ResetPasswordRequestBodySchema,
+  SendRecoveryLinkRequestBodySchema,
   SignInRequestBodySchema,
   SignUpRequestBodySchema,
 } from "@store/lib/validators/auth.schemas";
 import { User } from "@store/models/user.model";
 import { hash, verify } from "argon2";
 import type { Request, Response } from "express";
-import { sign } from "jsonwebtoken";
+import { type JwtPayload, sign, verify as verifyToken } from "jsonwebtoken";
 import { ZodError } from "zod";
 
 export class AuthController {
   static async signUp(request: Request, response: Response) {
     try {
-      console.dir(request.body);
       const { email, password, ...restUserProps } =
         SignUpRequestBodySchema.parse(request.body);
 
@@ -23,7 +25,7 @@ export class AuthController {
       if (userExists) {
         response.status(400).send({
           success: false,
-          error: `User with the email: ${email} already exists.`,
+          error: "User already exists.",
         });
         return;
       }
@@ -56,7 +58,7 @@ export class AuthController {
       if (!user) {
         response.status(404).send({
           success: false,
-          error: `User with email: ${email} was not found.`,
+          error: "User not found.",
         });
         return;
       }
@@ -115,6 +117,74 @@ export class AuthController {
     } catch (error: unknown) {
       if (error instanceof Error) {
         response.status(500).send({ success: false, error: error.message });
+      }
+    }
+  }
+
+  static async recoverAccount(request: Request, response: Response) {
+    try {
+      const { email } = SendRecoveryLinkRequestBodySchema.parse(request.body);
+
+      const user = await User.findOne({ where: { email } });
+
+      if (!user) {
+        response.status(404).send({
+          success: false,
+          error: "User not found.",
+        });
+        return;
+      }
+
+      await sendPasswordSetUpEmail({
+        user,
+        title: "Recover Your Account",
+        body: "Here's the recovery link you requested. Click the link below to reset your password.",
+      });
+
+      response.send({ success: true });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        const errorDetails =
+          error instanceof ZodError ? error.flatten() : error.message;
+
+        response.status(400).send({ success: false, error: errorDetails });
+      }
+    }
+  }
+
+  static async resetPassword(request: Request, response: Response) {
+    try {
+      const { password, token } = ResetPasswordRequestBodySchema.parse(
+        request.body
+      );
+
+      const decodedToken = (await verifyToken(
+        token,
+        AppConfig.sessionSecret
+      )) as JwtPayload;
+
+      const id = decodedToken.data.id;
+      const user = await User.findOne({ where: { id } });
+
+      if (!user) {
+        response.status(404).send({
+          success: false,
+          error: `User not found.`,
+        });
+        return;
+      }
+
+      const passwordHash = await hash(password);
+
+      await User.update({ password: passwordHash }, { where: { id } });
+
+      response.send({ success: true });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        const errorDetails =
+          error instanceof ZodError ? error.flatten() : error.message;
+
+        response.status(400).send({ success: false, error: errorDetails });
       }
     }
   }

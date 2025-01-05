@@ -77,7 +77,10 @@ export class ProductCategoriesController {
         return;
       }
 
-      await ProductCategory.update(categoryUpdatePayload, { where: { id } });
+      await ProductCategory.update(categoryUpdatePayload, {
+        where: { id },
+        individualHooks: true,
+      });
 
       response.send({ success: true });
     } catch (error) {
@@ -127,7 +130,7 @@ export class ProductCategoriesController {
         return;
       }
 
-      await ProductCategory.destroy({ where: { id } });
+      await ProductCategory.destroy({ where: { id }, individualHooks: true });
 
       response.send({ success: true });
     } catch (error) {

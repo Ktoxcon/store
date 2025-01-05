@@ -19,7 +19,6 @@ export function createModelAssociations() {
   OrderItem.belongsTo(Product, { foreignKey: "productId" });
 
   ProductCategory.hasMany(Product, {
-    onDelete: "CASCADE",
     foreignKey: "categoryId",
   });
 

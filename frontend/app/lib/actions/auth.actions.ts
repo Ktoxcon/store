@@ -9,7 +9,7 @@ export async function signUp(request: ActionFunctionArgs["request"]) {
   const entries = fromFormDataToObject(formData);
   const body = new URLSearchParams(entries);
 
-  const response = await fetch("http://localhost:3300/auth/signup", {
+  const response = await fetch(`${process.env.APP_BACKEND}/auth/signup`, {
     body,
     method: "post",
     headers: {
@@ -31,7 +31,7 @@ export async function signIn(request: ActionFunctionArgs["request"]) {
   const entries = fromFormDataToObject(formData);
   const body = new URLSearchParams(entries);
 
-  const response = await fetch("http://localhost:3300/auth/signin", {
+  const response = await fetch(`${process.env.APP_BACKEND}/auth/signin`, {
     body,
     method: "post",
     headers: {
@@ -58,7 +58,7 @@ export async function signIn(request: ActionFunctionArgs["request"]) {
 }
 
 export async function signOut() {
-  const response = await fetch("http://localhost:3300/auth/signout", {
+  const response = await fetch(`${process.env.APP_BACKEND}/auth/signout`, {
     method: "post",
   });
 
@@ -85,13 +85,16 @@ export async function recoverAccount(request: ActionFunctionArgs["request"]) {
   const entries = fromFormDataToObject(formData);
   const body = new URLSearchParams(entries);
 
-  const response = await fetch("http://localhost:3300/auth/forgot-password", {
-    body,
-    method: "post",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-  });
+  const response = await fetch(
+    `${process.env.APP_BACKEND}/auth/forgot-password`,
+    {
+      body,
+      method: "post",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    }
+  );
 
   const data = await response.json();
   return data;
@@ -106,13 +109,16 @@ export async function resetPassword(request: ActionFunctionArgs["request"]) {
 
   const body = new URLSearchParams({ ...searchParams, ...formDataFields });
 
-  const response = await fetch("http://localhost:3300/auth/reset-password", {
-    body,
-    method: "post",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-  });
+  const response = await fetch(
+    `${process.env.APP_BACKEND}/auth/reset-password`,
+    {
+      body,
+      method: "post",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    }
+  );
 
   const data = await response.json();
   return data;

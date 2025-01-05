@@ -8,9 +8,12 @@ export async function getProduct({
   params,
   request,
 }: LoaderFunctionArgs): Promise<ProductCategory> {
-  const response = await fetch(`http://localhost:3300/products/${params.id}`, {
-    headers: request.headers,
-  });
+  const response = await fetch(
+    `${process.env.APP_BACKEND}/products/${params.id}`,
+    {
+      headers: request.headers,
+    }
+  );
   const parsedResponse = await response.json();
   return parsedResponse.data;
 }
@@ -18,7 +21,7 @@ export async function getProduct({
 export async function listProducts(
   request: LoaderFunctionArgs["request"]
 ): Promise<List<ProductCategory>> {
-  const response = await fetch("http://localhost:3300/products", {
+  const response = await fetch(`${process.env.APP_BACKEND}/products`, {
     headers: request.headers,
   });
   const parsedResponse = await response.json();
@@ -44,7 +47,7 @@ export async function createProduct(request: ActionFunctionArgs["request"]) {
 
   const body = new URLSearchParams(entries);
 
-  const response = await fetch("http://localhost:3300/products", {
+  const response = await fetch(`${process.env.APP_BACKEND}/products`, {
     body,
     headers,
     method: "POST",
@@ -60,7 +63,7 @@ export async function updateProduct({ params, request }: ActionFunctionArgs) {
   const body = new URLSearchParams(entries);
 
   const response = await fetch(
-    `http://localhost:3300/categories/${params.id}`,
+    `${process.env.APP_BACKEND}/products/${params.id}`,
     {
       body,
       method: "PATCH",
@@ -76,10 +79,13 @@ export async function deleteProduct({
   params,
   request,
 }: LoaderFunctionArgs): Promise<ProductCategory> {
-  const response = await fetch(`http://localhost:3300/products/${params.id}`, {
-    method: "DELETE",
-    headers: request.headers,
-  });
+  const response = await fetch(
+    `${process.env.APP_BACKEND}/products/${params.id}`,
+    {
+      method: "DELETE",
+      headers: request.headers,
+    }
+  );
 
   const data = await response.json();
   return data;

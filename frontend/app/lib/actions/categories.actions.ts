@@ -8,7 +8,7 @@ export async function getCategory({
   request,
 }: LoaderFunctionArgs): Promise<ProductCategory> {
   const response = await fetch(
-    `http://localhost:3300/categories/${params.id}`,
+    `${process.env.APP_BACKEND}/categories/${params.id}`,
     {
       headers: request.headers,
     }
@@ -20,7 +20,7 @@ export async function getCategory({
 export async function listCategories(
   request: LoaderFunctionArgs["request"]
 ): Promise<List<ProductCategory>> {
-  const response = await fetch("http://localhost:3300/categories", {
+  const response = await fetch(`${process.env.APP_BACKEND}/categories`, {
     headers: request.headers,
   });
   const parsedResponse = await response.json();
@@ -49,7 +49,7 @@ export async function updateCategory({ params, request }: ActionFunctionArgs) {
   const body = new URLSearchParams(entries);
 
   const response = await fetch(
-    `http://localhost:3300/categories/${params.id}`,
+    `${process.env.APP_BACKEND}/categories/${params.id}`,
     {
       body,
       method: "PATCH",
@@ -66,7 +66,7 @@ export async function deleteCategory({
   request,
 }: LoaderFunctionArgs): Promise<ProductCategory> {
   const response = await fetch(
-    `http://localhost:3300/categories/${params.id}`,
+    `${process.env.APP_BACKEND}/categories/${params.id}`,
     {
       method: "DELETE",
       headers: request.headers,

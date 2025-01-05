@@ -22,11 +22,7 @@ export function CreateProductForm() {
 
   return (
     <Form method="POST" encType="multipart/form-data">
-      <Flex
-        gap="3"
-        direction="column"
-        // maxWidth={{ initial: "100%", lg: "50%" }}
-      >
+      <Flex gap="3" direction="column">
         <Box>
           <label htmlFor="category">
             <Text as="div" size="2" mb="1" weight="bold">

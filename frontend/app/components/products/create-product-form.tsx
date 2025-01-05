@@ -91,15 +91,13 @@ export function CreateProductForm() {
               Image
             </Text>
           </label>
-          <div className="rt-TextFieldRoot rt-r-size-2 rt-variant-surface">
-            <input
-              type="file"
-              id="picture"
-              placeholder="Select a product image"
-              className="rt-reset rt-TextFieldInput"
-              {...register("picture")}
-            />
-          </div>
+          <input
+            type="file"
+            id="picture"
+            placeholder="Select a product image"
+            className="rt-reset rt-TextFieldInput"
+            {...register("picture")}
+          />
         </Box>
         <Flex
           py="8"

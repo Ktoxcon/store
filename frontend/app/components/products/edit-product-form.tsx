@@ -98,15 +98,13 @@ export function EditProductForm({ product }: EditProductFormProps) {
               Image
             </Text>
           </label>
-          <div className="rt-TextFieldRoot rt-r-size-2 rt-variant-surface">
-            <input
-              type="file"
-              id="picture"
-              placeholder="Select a product image"
-              className="rt-reset rt-TextFieldInput"
-              {...register("picture")}
-            />
-          </div>
+          <input
+            type="file"
+            id="picture"
+            placeholder="Select a product image"
+            className="rt-reset rt-TextFieldInput"
+            {...register("picture")}
+          />
           <Box maxWidth="200px" maxHeight="200px">
             {product.picture && (
               <img

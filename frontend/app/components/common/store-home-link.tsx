@@ -4,7 +4,7 @@ import { StoreLogo } from "./store-logo";
 
 export function StoreHomeLink() {
   return (
-    <AppLink to={routes.root}>
+    <AppLink underline="none" to={routes.root}>
       <StoreLogo />
     </AppLink>
   );

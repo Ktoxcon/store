@@ -44,7 +44,7 @@ export function DeleteCategoryForm({ id }: DeleteCategoryFormProps) {
           </AlertDialog.Cancel>
           <AlertDialog.Action>
             <Form method="DELETE" action={routes.admin.category(id)}>
-              <Button variant="solid  " color="red" style={{ width: "100%" }}>
+              <Button variant="solid" color="red" style={{ width: "100%" }}>
                 Delete
               </Button>
             </Form>

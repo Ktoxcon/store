@@ -1,30 +1,41 @@
 import { ProductsController } from "@store/controllers/products.controller";
 import { AdminMiddleware } from "@store/middleware/admin.middleware";
 import { AuthMiddleware } from "@store/middleware/auth.middleware";
-import express from "express";
+import { FormDataMiddleware } from "@store/middleware/form-data.middleware";
+import { UrlEncodedMiddleware } from "@store/middleware/url-encoded.middleware";
+import { Router } from "express";
 
-export const ProductRoutes = express.Router();
+export const ProductRoutes = Router();
 
 ProductRoutes.get(
-  "/products/:id",
+  "/",
+  UrlEncodedMiddleware,
+  AuthMiddleware,
+  ProductsController.listProducts
+);
+ProductRoutes.get(
+  "/:id",
+  UrlEncodedMiddleware,
   AuthMiddleware,
   ProductsController.getProduct
 );
 ProductRoutes.post(
-  "/products",
+  "/",
+  FormDataMiddleware,
   AuthMiddleware,
   AdminMiddleware,
   ProductsController.createProduct
 );
 ProductRoutes.patch(
-  "/products/:id",
+  "/:id",
+  FormDataMiddleware,
   AuthMiddleware,
   AdminMiddleware,
   ProductsController.updateProduct
 );
-ProductRoutes.get("/products", AuthMiddleware, ProductsController.listProducts);
 ProductRoutes.delete(
-  "/products/:id",
+  "/:id",
+  UrlEncodedMiddleware,
   AuthMiddleware,
   AdminMiddleware,
   ProductsController.deleteProduct

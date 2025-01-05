@@ -1,3 +1,4 @@
+import { uploadImage } from "@store/lib/files/upload-image";
 import { IdParamSchema } from "@store/lib/validators/model.schemas";
 import {
   CreateProductRequestBodySchema,
@@ -57,10 +58,13 @@ export class ProductsController {
         return;
       }
 
+      const picture = await uploadImage(request?.file);
+
       const newProduct = await Product.create({
         ...restProductProps,
         name,
         categoryId,
+        picture: picture.secure_url,
       });
 
       response.send({ success: true, data: newProduct });
@@ -88,7 +92,17 @@ export class ProductsController {
         return;
       }
 
-      await Product.update(productUpdatePayload, { where: { id } });
+      let picture = product.picture;
+
+      if (request.file) {
+        const image = await uploadImage(request?.file);
+        picture = image.secure_url;
+      }
+
+      await Product.update(
+        { ...productUpdatePayload, picture },
+        { where: { id } }
+      );
 
       response.send({ success: true });
     } catch (error) {

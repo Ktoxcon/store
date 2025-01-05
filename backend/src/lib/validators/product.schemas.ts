@@ -16,7 +16,6 @@ export const CreateProductRequestBodySchema = z.object({
   description: z.string().nonempty(),
   price: ProductPriceSchema,
   quantity: ProductQuantitySchema,
-  picture: z.string().url(),
   categoryId: z.string().nonempty(),
   active: StatusSchema.optional(),
 });

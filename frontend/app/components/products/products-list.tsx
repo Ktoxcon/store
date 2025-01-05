@@ -27,6 +27,7 @@ export function ProductsList({ products }: ProductsListProps) {
             <Text wrap="pretty">Name</Text>
           </Table.ColumnHeaderCell>
           <Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell>Stock</Table.ColumnHeaderCell>
           <Table.ColumnHeaderCell>Price</Table.ColumnHeaderCell>
           <Table.ColumnHeaderCell>
             <Text truncate>Creation Date</Text>
@@ -53,6 +54,7 @@ export function ProductsList({ products }: ProductsListProps) {
                     <Badge color="red">Inactive</Badge>
                   )}
                 </Table.Cell>
+                <Table.Cell>{product.quantity}</Table.Cell>
                 <Table.Cell>
                   <Text truncate>
                     {QuetzalCurrencyFormatter.format(product.price)}

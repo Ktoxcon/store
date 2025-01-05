@@ -4,7 +4,11 @@ import { StoreLogo } from "./store-logo";
 
 export function StoreHomeLink() {
   return (
-    <AppLink underline="none" to={routes.root}>
+    <AppLink
+      underline="none"
+      to={routes.root}
+      style={{ color: "var(--accent-color)" }}
+    >
       <StoreLogo />
     </AppLink>
   );

@@ -1,8 +1,8 @@
 import { IdParamSchema } from "@store/lib/validators/model.schemas";
 import {
   CreateProductRequestBodySchema,
+  EditProductDataSchema,
   ListProductsRequestBodySchema,
-  OptionalProductDataSchema,
 } from "@store/lib/validators/product.schemas";
 import { ProductCategory } from "@store/models/product-category.model";
 import { Product } from "@store/models/product.model";
@@ -36,8 +36,17 @@ export class ProductsController {
 
   static async createProduct(request: Request, response: Response) {
     try {
-      const { name, category, ...restProductProps } =
+      const { name, categoryId, ...restProductProps } =
         CreateProductRequestBodySchema.parse(request.body);
+
+      const categoryExists = await ProductCategory.findByPk(categoryId);
+
+      if (!categoryExists) {
+        response
+          .status(404)
+          .send({ success: false, error: "Product category not found." });
+        return;
+      }
 
       const productAlreadyExists = await Product.findOne({ where: { name } });
 
@@ -48,19 +57,10 @@ export class ProductsController {
         return;
       }
 
-      const categoryExists = await ProductCategory.findByPk(category);
-
-      if (!categoryExists) {
-        response
-          .status(404)
-          .send({ success: false, error: "Product category not found." });
-        return;
-      }
-
       const newProduct = await Product.create({
         ...restProductProps,
         name,
-        ProductCategoryId: category,
+        categoryId,
       });
 
       response.send({ success: true, data: newProduct });
@@ -77,9 +77,7 @@ export class ProductsController {
   static async updateProduct(request: Request, response: Response) {
     try {
       const id = IdParamSchema.parse(request.params.id);
-      const productUpdatePayload = OptionalProductDataSchema.parse(
-        request.body
-      );
+      const productUpdatePayload = EditProductDataSchema.parse(request.body);
 
       const product = await Product.findByPk(id);
 
@@ -115,6 +113,12 @@ export class ProductsController {
         },
         limit,
         offset,
+        include: [
+          {
+            model: ProductCategory,
+            attributes: ["id", "name"],
+          },
+        ],
       });
 
       response.send({ success: true, data: { count, items: rows } });
@@ -128,8 +132,22 @@ export class ProductsController {
     }
   }
 
-  static async addProductPicture(request: Request, response: Response) {
+  static async deleteProduct(request: Request, response: Response) {
     try {
+      const id = IdParamSchema.parse(request.params.id);
+
+      const product = await Product.findByPk(id);
+
+      if (!product) {
+        response
+          .status(404)
+          .send({ success: false, error: "Product not found." });
+        return;
+      }
+
+      await Product.destroy({ where: { id } });
+
+      response.send({ success: true });
     } catch (error) {
       if (error instanceof Error) {
         const errorDetails =

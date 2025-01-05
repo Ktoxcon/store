@@ -1,8 +1,8 @@
 import { IdParamSchema } from "@store/lib/validators/model.schemas";
 import {
   CreateCategoryRequestBodySchema,
+  EditCategoryRequestBodySchema,
   ListCategoriesRequestBodySchema,
-  OptionalCategoryDataSchema,
 } from "@store/lib/validators/product-categories.schemas";
 import { ProductCategory } from "@store/models/product-category.model";
 import type { Request, Response } from "express";
@@ -64,7 +64,7 @@ export class ProductCategoriesController {
   static async updateCategory(request: Request, response: Response) {
     try {
       const id = IdParamSchema.parse(request.params.id);
-      const categoryUpdatePayload = OptionalCategoryDataSchema.parse(
+      const categoryUpdatePayload = EditCategoryRequestBodySchema.parse(
         request.body
       );
 
@@ -104,6 +104,32 @@ export class ProductCategoriesController {
       });
 
       response.send({ success: true, data: { count, items: rows } });
+    } catch (error) {
+      if (error instanceof Error) {
+        const errorDetails =
+          error instanceof ZodError ? error.flatten() : error.message;
+
+        response.status(400).send({ success: false, error: errorDetails });
+      }
+    }
+  }
+
+  static async deleteCategory(request: Request, response: Response) {
+    try {
+      const id = IdParamSchema.parse(request.params.id);
+
+      const category = await ProductCategory.findByPk(id);
+
+      if (!category) {
+        response
+          .status(404)
+          .send({ success: false, error: "Category not found." });
+        return;
+      }
+
+      await ProductCategory.destroy({ where: { id } });
+
+      response.send({ success: true });
     } catch (error) {
       if (error instanceof Error) {
         const errorDetails =

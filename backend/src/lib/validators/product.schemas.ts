@@ -13,21 +13,16 @@ export const ProductQuantitySchema = z
 
 export const CreateProductRequestBodySchema = z.object({
   name: z.string().nonempty(),
-  category: z.string().nonempty(),
   description: z.string().nonempty(),
   price: ProductPriceSchema,
   quantity: ProductQuantitySchema,
-});
-
-export const OptionalProductDataSchema = z.object({
-  name: z.string().nonempty().optional(),
-  category: z.string().nonempty().optional(),
-  description: z.string().nonempty().optional(),
-  price: ProductPriceSchema.optional(),
-  quantity: ProductQuantitySchema.optional(),
+  picture: z.string().url(),
+  categoryId: z.string().nonempty(),
   active: StatusSchema.optional(),
 });
 
+export const EditProductDataSchema = CreateProductRequestBodySchema.partial();
+
 export const ListProductsRequestBodySchema = PaginationRequestBody.merge(
-  OptionalProductDataSchema
+  EditProductDataSchema
 );

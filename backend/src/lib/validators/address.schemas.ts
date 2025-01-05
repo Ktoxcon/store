@@ -12,18 +12,11 @@ export const CreateAddressRequestBodySchema = z.object({
   userId: z.string().nonempty(),
 });
 
-export const OptionalAddressDataSchema = z.object({
-  name: z.string().nonempty().optional(),
-  recipient: z.string().nonempty().optional(),
-  phone: z.string().nonempty().optional(),
-  addressLine: z.string().nonempty().optional(),
-  secondAddressLine: z.string().nonempty().optional(),
-  department: z.string().nonempty().optional(),
-  township: z.string().nonempty().optional(),
-});
+export const EditAddressRequestBodySchema =
+  CreateAddressRequestBodySchema.partial();
 
 export const ListAddressesRequestBodySchema = PaginationRequestBody.merge(
-  OptionalAddressDataSchema.pick({
+  EditAddressRequestBodySchema.pick({
     name: true,
     phone: true,
     township: true,

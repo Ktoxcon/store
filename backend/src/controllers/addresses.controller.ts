@@ -1,7 +1,7 @@
 import {
   CreateAddressRequestBodySchema,
+  EditAddressRequestBodySchema,
   ListAddressesRequestBodySchema,
-  OptionalAddressDataSchema,
 } from "@store/lib/validators/address.schemas";
 import { IdParamSchema } from "@store/lib/validators/model.schemas";
 import { Address } from "@store/models/address.model";
@@ -75,7 +75,7 @@ export class AddressesController {
   static async updateAddress(request: Request, response: Response) {
     try {
       const id = IdParamSchema.parse(request.params.id);
-      const addressUpdatePayload = OptionalAddressDataSchema.parse(
+      const addressUpdatePayload = EditAddressRequestBodySchema.parse(
         request.body
       );
 

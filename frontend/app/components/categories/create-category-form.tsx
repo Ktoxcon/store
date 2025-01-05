@@ -37,10 +37,16 @@ export function CreateCategoryForm() {
               {...register("name")}
             />
           </Flex>
-
-          <Flex gap="3" mt="4" justify="end">
+          <Flex
+            py="4"
+            gap="3"
+            justify={{ initial: "center", lg: "end" }}
+            direction={{ initial: "column-reverse", lg: "row" }}
+          >
             <Dialog.Close>
-              <Button color="red">Cancel</Button>
+              <Button color="red" variant="outline">
+                Cancel
+              </Button>
             </Dialog.Close>
             <Dialog.Close>
               <Button

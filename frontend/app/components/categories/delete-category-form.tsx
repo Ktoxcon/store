@@ -31,8 +31,12 @@ export function DeleteCategoryForm({ id }: DeleteCategoryFormProps) {
           associated products will also be removed. However, you can restore it
           later from the trash bin if needed.
         </AlertDialog.Description>
-
-        <Flex gap="3" mt="4" justify="end">
+        <Flex
+          py="4"
+          gap="3"
+          justify={{ initial: "center", lg: "end" }}
+          direction={{ initial: "column-reverse", lg: "row" }}
+        >
           <AlertDialog.Cancel>
             <Button variant="soft" color="gray">
               Cancel
@@ -40,7 +44,7 @@ export function DeleteCategoryForm({ id }: DeleteCategoryFormProps) {
           </AlertDialog.Cancel>
           <AlertDialog.Action>
             <Form method="DELETE" action={routes.admin.category(id)}>
-              <Button variant="solid" color="red">
+              <Button variant="solid  " color="red" style={{ width: "100%" }}>
                 Delete
               </Button>
             </Form>

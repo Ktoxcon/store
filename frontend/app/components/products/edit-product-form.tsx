@@ -116,8 +116,13 @@ export function EditProductForm({ product }: EditProductFormProps) {
             )}
           </Box>
         </Box>
-        <Flex gap="3" mt="4" justify="end">
-          <Button type="button" color="red" asChild>
+        <Flex
+          py="8"
+          gap="3"
+          justify={{ initial: "center", lg: "end" }}
+          direction={{ initial: "column-reverse", lg: "row" }}
+        >
+          <Button type="button" color="red" variant="outline" asChild>
             <AppLink underline="none" to={routes.admin.products}>
               Cancel
             </AppLink>

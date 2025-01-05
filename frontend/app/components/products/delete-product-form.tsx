@@ -30,8 +30,12 @@ export function DeleteProductForm({ id }: DeleteProductFormProps) {
           trash bin, it will no longer be accessible to users. However, you can
           restore it later from the trash bin if needed.
         </AlertDialog.Description>
-
-        <Flex gap="3" mt="4" justify="end">
+        <Flex
+          py="4"
+          gap="3"
+          justify={{ initial: "center", lg: "end" }}
+          direction={{ initial: "column-reverse", lg: "row" }}
+        >
           <AlertDialog.Cancel>
             <Button variant="soft" color="gray">
               Cancel
@@ -39,7 +43,7 @@ export function DeleteProductForm({ id }: DeleteProductFormProps) {
           </AlertDialog.Cancel>
           <AlertDialog.Action>
             <Form method="DELETE" action={routes.admin.product(id)}>
-              <Button variant="solid" color="red">
+              <Button color="red" variant="solid" style={{ width: "100%" }}>
                 Delete
               </Button>
             </Form>

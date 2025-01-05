@@ -1,16 +1,12 @@
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { IconButton } from "@radix-ui/themes";
-import { useTheme } from "next-themes";
+import { useAppTheme } from "@store/lib/hooks/use-app-theme";
 
 export function ThemeSwitch() {
-  const { theme, setTheme } = useTheme();
-
-  const handleThemeSwitchClick = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
+  const { theme, toggleTheme } = useAppTheme();
 
   return (
-    <IconButton variant="outline" onClick={handleThemeSwitchClick}>
+    <IconButton variant="outline" onClick={() => toggleTheme()}>
       {theme === "dark" ? <SunIcon /> : <MoonIcon />}
     </IconButton>
   );

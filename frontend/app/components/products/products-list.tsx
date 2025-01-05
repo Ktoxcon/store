@@ -9,7 +9,7 @@ import {
   Tooltip,
 } from "@radix-ui/themes";
 import routes from "@store/lib/constants/routes";
-import { CurrencyFormatter } from "@store/lib/fomatters/currency";
+import { QuetzalCurrencyFormatter } from "@store/lib/fomatters/currency";
 import type { Product } from "@store/lib/types/product";
 import { AppLink } from "../ui/app-link";
 import { DeleteProductForm } from "./delete-product-form";
@@ -55,7 +55,7 @@ export function ProductsList({ products }: ProductsListProps) {
                 </Table.Cell>
                 <Table.Cell>
                   <Text truncate>
-                    {CurrencyFormatter.format(product.price)}
+                    {QuetzalCurrencyFormatter.format(product.price)}
                   </Text>
                 </Table.Cell>
                 <Table.Cell>

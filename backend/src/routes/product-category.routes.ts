@@ -23,6 +23,12 @@ ProductCategoryRoutes.patch(
   AdminMiddleware,
   ProductCategoriesController.updateCategory
 );
+ProductCategoryRoutes.delete(
+  "/categories/:id",
+  AuthMiddleware,
+  AdminMiddleware,
+  ProductCategoriesController.deleteCategory
+);
 ProductCategoryRoutes.get(
   "/categories",
   AuthMiddleware,

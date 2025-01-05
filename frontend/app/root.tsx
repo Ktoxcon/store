@@ -1,5 +1,4 @@
 import { Flex, Heading, Text } from "@radix-ui/themes";
-import "@radix-ui/themes/styles.css";
 import {
   isRouteErrorResponse,
   Links,
@@ -10,11 +9,12 @@ import {
   type LoaderFunctionArgs,
 } from "react-router";
 import type { Route } from "./+types/root";
-import "./app.css";
-import { StoreFooter } from "./components/common/store-footer";
 import { NavBar } from "./components/ui/navbar";
 import { profileCookie } from "./lib/auth/session-cookie";
 import { Providers } from "./lib/providers";
+
+import "@radix-ui/themes/styles.css";
+import "./app.css";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const headers = request.headers;
@@ -76,7 +76,6 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
           {details}
         </Text>
       </Flex>
-      <StoreFooter />
     </>
   );
 }

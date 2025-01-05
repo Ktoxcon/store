@@ -80,6 +80,44 @@ export async function signOut() {
   return data;
 }
 
+export async function recoverAccount(request: ActionFunctionArgs["request"]) {
+  const formData = await request.formData();
+  const entries = fromFormDataToObject(formData);
+  const body = new URLSearchParams(entries);
+
+  const response = await fetch("http://localhost:3300/auth/forgot-password", {
+    body,
+    method: "post",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  });
+
+  const data = await response.json();
+  return data;
+}
+
+export async function resetPassword(request: ActionFunctionArgs["request"]) {
+  const url = new URL(request.url);
+  const searchParams = Object.fromEntries(url.searchParams.entries());
+
+  const formData = await request.formData();
+  const formDataFields = fromFormDataToObject(formData);
+
+  const body = new URLSearchParams({ ...searchParams, ...formDataFields });
+
+  const response = await fetch("http://localhost:3300/auth/reset-password", {
+    body,
+    method: "post",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  });
+
+  const data = await response.json();
+  return data;
+}
+
 export async function redirectAuthenticatedUserToHome(headers: Headers) {
   const profile = await profileCookie.getSession(headers.get("Cookie"));
 

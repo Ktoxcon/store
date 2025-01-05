@@ -25,7 +25,7 @@ export function SideBar({ children }: { children?: ReactNode }) {
       <Dialog.Content
         height="100%"
         width={{ xs: "50%", sm: "25%", md: "25%" }}
-        style={{ position: "fixed", top: 0, left: 0 }}
+        style={{ position: "fixed", top: 0, left: 0, borderRadius: "none" }}
       >
         <Flex direction="column">
           <Flex justify="between">

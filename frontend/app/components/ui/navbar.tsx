@@ -33,7 +33,7 @@ export function NavBar({ children }: NavBarProps) {
       py="4"
       gap="6"
       align="center"
-      px={{ initial: "4", lg: "6" }}
+      px={{ initial: "2", lg: "6" }}
       style={{
         boxShadow: "var(--shadow-2)",
       }}

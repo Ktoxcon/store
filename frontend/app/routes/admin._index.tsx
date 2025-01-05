@@ -1,16 +1,20 @@
+import { Flex, Heading } from "@radix-ui/themes";
 import { ProtectedAdminRoute } from "@store/lib/auth/decorators";
-import { profileCookie } from "@store/lib/auth/session-cookie";
-import type { LoaderFunctionArgs } from "react-router";
 
-export const loader = ProtectedAdminRoute(
-  async ({ request }: LoaderFunctionArgs) => {
-    const headers = request.headers;
-    const profile = await profileCookie.getSession(headers.get("Cookie"));
-
-    return profile.data;
-  }
-);
+export const loader = ProtectedAdminRoute();
 
 export default function AdminHome() {
-  return <h1>Admin Home</h1>;
+  return (
+    <Flex direction="column" gap="6">
+      <Flex
+        gap="2"
+        align={{ initial: "start", lg: "center" }}
+        direction={{ initial: "column", lg: "row" }}
+      >
+        <Heading as="h1" size={{ initial: "6", lg: "8" }}>
+          Welcome back!
+        </Heading>
+      </Flex>
+    </Flex>
+  );
 }

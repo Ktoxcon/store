@@ -58,7 +58,7 @@ export function ProtectedAdminRoute(
 
     if (!loaderOrAction) return null;
 
-    //@ts-expect-error Error due to this not having a specific type
+    //@ts-expect-error Error due to 'this' not having a specific type
     return await loaderOrAction.call(this, {
       request,
       context,

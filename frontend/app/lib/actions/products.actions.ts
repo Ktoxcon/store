@@ -1,26 +1,24 @@
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
+import { uploadImage } from "../files/upload-image";
 import { fromFormDataToObject } from "../http/form-data";
 import type { ProductCategory } from "../types/category";
 import type { List } from "../types/common";
 
-export async function getCategory({
+export async function getProduct({
   params,
   request,
 }: LoaderFunctionArgs): Promise<ProductCategory> {
-  const response = await fetch(
-    `http://localhost:3300/categories/${params.id}`,
-    {
-      headers: request.headers,
-    }
-  );
+  const response = await fetch(`http://localhost:3300/products/${params.id}`, {
+    headers: request.headers,
+  });
   const parsedResponse = await response.json();
   return parsedResponse.data;
 }
 
-export async function listCategories(
+export async function listProducts(
   request: LoaderFunctionArgs["request"]
 ): Promise<List<ProductCategory>> {
-  const response = await fetch("http://localhost:3300/categories", {
+  const response = await fetch("http://localhost:3300/products", {
     headers: request.headers,
   });
   const parsedResponse = await response.json();
@@ -28,22 +26,35 @@ export async function listCategories(
   return parsedResponse.data;
 }
 
-export async function createCategory(request: ActionFunctionArgs["request"]) {
+export async function createProduct(request: ActionFunctionArgs["request"]) {
   const formData = await request.formData();
+
+  const pictureUploadResult = await uploadImage({
+    formData,
+    fileName: "picture",
+  });
+
+  const headers = new Headers(request.headers);
+  headers.delete("content-type");
+  headers.delete("content-length");
+  headers.set("Content-Type", "application/x-www-form-urlencoded");
+
   const entries = fromFormDataToObject(formData);
+  entries.picture = pictureUploadResult.secure_url;
+
   const body = new URLSearchParams(entries);
 
-  const response = await fetch("http://localhost:3300/categories", {
+  const response = await fetch("http://localhost:3300/products", {
     body,
+    headers,
     method: "POST",
-    headers: request.headers,
   });
 
   const data = await response.json();
   return data;
 }
 
-export async function updateCategory({ params, request }: ActionFunctionArgs) {
+export async function updateProduct({ params, request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const entries = fromFormDataToObject(formData);
   const body = new URLSearchParams(entries);
@@ -61,17 +72,15 @@ export async function updateCategory({ params, request }: ActionFunctionArgs) {
   return data;
 }
 
-export async function deleteCategory({
+export async function deleteProduct({
   params,
   request,
 }: LoaderFunctionArgs): Promise<ProductCategory> {
-  const response = await fetch(
-    `http://localhost:3300/categories/${params.id}`,
-    {
-      method: "DELETE",
-      headers: request.headers,
-    }
-  );
-  const parsedResponse = await response.json();
-  return parsedResponse.data;
+  const response = await fetch(`http://localhost:3300/products/${params.id}`, {
+    method: "DELETE",
+    headers: request.headers,
+  });
+
+  const data = await response.json();
+  return data;
 }

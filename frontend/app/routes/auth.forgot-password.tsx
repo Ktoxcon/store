@@ -11,13 +11,12 @@ import {
   TextField,
 } from "@radix-ui/themes";
 import { AppLink } from "@store/components/ui/app-link";
-import { PasswordInput } from "@store/components/ui/password-input";
 import {
+  recoverAccount,
   redirectAuthenticatedUserToHome,
-  signIn,
 } from "@store/lib/actions/auth.actions";
 import routes from "@store/lib/constants/routes";
-import { SignInFormSchema } from "@store/lib/validators/auth.schemas";
+import { PasswordRecoveryFormSchema } from "@store/lib/validators/auth.schemas";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -27,10 +26,10 @@ import {
   type LoaderFunctionArgs,
   type MetaFunction,
 } from "react-router";
-import type { Route } from "./+types/auth.signin";
+import type { Route } from "./+types/auth.forgot-password";
 
 export const meta: MetaFunction = () => {
-  return [{ title: "Sign In" }];
+  return [{ title: "Forgot Password" }];
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -38,21 +37,21 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export async function action({ request }: ActionFunctionArgs) {
-  const response = await signIn(request);
+  const response = await recoverAccount(request);
   return response;
 }
 
-export default function SignIn({ actionData }: Route.ComponentProps) {
+export default function ForgotPassword({ actionData }: Route.ComponentProps) {
   const navigation = useNavigation();
   const form = useRef<HTMLFormElement>(null);
 
-  const { register, reset, formState } = useForm({
+  const { reset, register, formState } = useForm({
     mode: "onChange",
-    resolver: zodResolver(SignInFormSchema),
+    resolver: zodResolver(PasswordRecoveryFormSchema),
   });
 
   useEffect(() => {
-    if (navigation.state === "idle" && actionData?.error) {
+    if (navigation.state === "idle") {
       reset();
       form.current?.reset();
     }
@@ -61,43 +60,38 @@ export default function SignIn({ actionData }: Route.ComponentProps) {
   return (
     <>
       <Box py="4">
-        <Heading as="h2">Sign In To Your Account</Heading>
+        <Heading as="h2">Forgot Your Password?</Heading>
         <Box pt="4">
           <Text as="p">
-            Don't have an account?{" "}
+            Already have an account?{" "}
             <Link asChild>
-              <AppLink to={routes.auth.signup} prefetch="render">
-                Sign Up
+              <AppLink to={routes.auth.signin} prefetch="render">
+                Sign In
               </AppLink>
             </Link>
           </Text>
         </Box>
       </Box>
-      <Form method="post" ref={form}>
+      <Form method="POST" ref={form}>
         <Flex direction="column" gap="4">
           <TextField.Root
             size="3"
+            required
             id="email"
-            required
             type="email"
+            autoComplete="on"
             placeholder="Email"
-            autoComplete="email"
-            {...register("email", { required: true })}
+            {...register("email")}
           />
-          <PasswordInput
-            size="3"
-            id="password"
-            required
-            type="password"
-            placeholder="Password"
-            {...register("password", { required: true })}
-          />
-          {actionData && (
-            <Callout.Root color="red">
+          {actionData?.success && (
+            <Callout.Root color="green">
               <Callout.Icon>
                 <InfoCircledIcon />
               </Callout.Icon>
-              <Callout.Text>{actionData.error}</Callout.Text>
+              <Callout.Text>
+                Please check your email inbox for your account recovery
+                instructions.
+              </Callout.Text>
             </Callout.Root>
           )}
           <Box py="2">
@@ -105,17 +99,14 @@ export default function SignIn({ actionData }: Route.ComponentProps) {
               size="3"
               style={{ width: "100%" }}
               loading={navigation.state === "submitting"}
-              disabled={!formState.isDirty || !formState.isValid}
+              disabled={
+                !formState.isDirty ||
+                !formState.isValid ||
+                navigation.state === "submitting"
+              }
             >
-              Sign In
+              Send Recovery Link
             </Button>
-          </Box>
-          <Box>
-            <Flex justify="center">
-              <AppLink size="2" to={routes.auth.resetPassword}>
-                Forgot Password?
-              </AppLink>
-            </Flex>
           </Box>
         </Flex>
       </Form>

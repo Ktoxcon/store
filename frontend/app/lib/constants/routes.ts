@@ -21,8 +21,9 @@ export default {
     profile: "/admin/profile",
     products: "/admin/products",
     categories: "/admin/categories",
-    order: (id: string) => `/admin/order/${id}`,
-    product: (id: string) => `/admin/product/${id}`,
-    category: (id: string) => `/admin/category/${id}`,
+    newProduct: "/admin/products/new",
+    order: (id: string) => `/admin/orders/${id}`,
+    product: (id: string) => `/admin/products/${id}`,
+    category: (id: string) => `/admin/categories/${id}`,
   },
 };

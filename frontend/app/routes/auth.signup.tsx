@@ -11,16 +11,17 @@ import {
   TextField,
 } from "@radix-ui/themes";
 import { SignUpFormErrors } from "@store/components/auth/signup-errors";
+import { AppLink } from "@store/components/ui/app-link";
 import { PasswordInput } from "@store/components/ui/password-input";
 import {
   redirectAuthenticatedUserToHome,
   signUp,
 } from "@store/lib/actions/auth.actions";
+import routes from "@store/lib/constants/routes";
 import { SignUpFormSchema } from "@store/lib/validators/auth.schemas";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import {
-  Link as AppLink,
   Form,
   useNavigation,
   type ActionFunctionArgs,
@@ -66,7 +67,7 @@ export default function SignUp({ actionData }: Route.ComponentProps) {
           <Text as="p">
             Already have an account?{" "}
             <Link asChild>
-              <AppLink to="/auth/signin" prefetch="render">
+              <AppLink to={routes.auth.signin} prefetch="render">
                 Sign In
               </AppLink>
             </Link>

@@ -3,7 +3,7 @@ import { TextField } from "@radix-ui/themes";
 import routes from "@store/lib/constants/routes";
 import { AppLink } from "../ui/app-link";
 import { NavBar } from "../ui/navbar";
-import { Account } from "../user/account";
+import { Account } from "../users/account";
 
 export function CustomerNavBar() {
   return (

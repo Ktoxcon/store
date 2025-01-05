@@ -21,7 +21,6 @@ export function AdminSideBar() {
             Dashboard
           </AppLink>
         </SideBar.Item>
-
         <SideBar.Item>
           <MixIcon />
           <AppLink size="5" to={routes.admin.categories}>

@@ -8,7 +8,7 @@ export default function AuthLayout() {
       <NavBar>
         <NavBar.Left />
       </NavBar>
-      <Container size="1" align="center" height="100dvh">
+      <Container size="1" align="center">
         <Flex
           direction="column"
           justify="center"

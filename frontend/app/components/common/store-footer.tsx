@@ -12,7 +12,7 @@ export function StoreFooter() {
         lg: "row",
         initial: "column",
       }}
-      style={{ background: "var(--accent-8)", boxShadow: "var(--shadow-2)" }}
+      style={{ background: "var(--accent-9)", boxShadow: "var(--shadow-2)" }}
     >
       <Box flexGrow="1">
         <Heading as="h3">About Us</Heading>

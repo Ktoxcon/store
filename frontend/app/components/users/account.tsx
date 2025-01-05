@@ -47,11 +47,11 @@ function AccountSection({
 }
 
 export function Account({ children }: AccountProps) {
-  const data = useRouteLoaderData<User>("root");
+  const user = useRouteLoaderData<User>("root");
 
-  const picture = data?.picture ? data.picture : "";
-  const username = data?.name ? (
-    `${data.name.charAt(0)}${data.lastName.charAt(0)}`
+  const picture = user?.picture ? user.picture : "";
+  const username = user?.name ? (
+    `${user.name.charAt(0)}${user.lastName.charAt(0)}`
   ) : (
     <PersonIcon />
   );
@@ -73,7 +73,7 @@ export function Account({ children }: AccountProps) {
           <Flex flexGrow="1" direction="column" align="center" gap="2">
             <Box>
               <Text as="p" size="2">
-                Hi {data?.name} {data?.lastName}&#x21;
+                Hi {user?.name} {user?.lastName}&#x21;
               </Text>
             </Box>
             <Separator size="4" />

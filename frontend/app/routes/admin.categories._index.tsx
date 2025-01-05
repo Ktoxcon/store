@@ -30,12 +30,12 @@ export default function Categories({ loaderData }: Route.ComponentProps) {
         align={{ initial: "start", lg: "center" }}
         direction={{ initial: "column", lg: "row" }}
       >
-        <Flex flexGrow="1">
+        <Box flexGrow="1">
           <Heading as="h1" size={{ initial: "7", lg: "8" }}>
             Product Categories
           </Heading>
-        </Flex>
-        <Box flexGrow={{ initial: "1", lg: "0" }}>
+        </Box>
+        <Box width={{ initial: "100%", lg: "unset" }}>
           <CreateCategoryForm />
         </Box>
       </Flex>

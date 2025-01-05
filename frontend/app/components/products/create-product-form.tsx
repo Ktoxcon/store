@@ -102,8 +102,10 @@ export function CreateProductForm() {
           </div>
         </Box>
         <Flex gap="3" mt="4" justify="end">
-          <Button type="button" variant="soft" color="gray">
-            <AppLink to={routes.admin.products}>Cancel</AppLink>
+          <Button type="button" color="red" asChild>
+            <AppLink underline="none" to={routes.admin.products}>
+              Cancel
+            </AppLink>
           </Button>
 
           <Button

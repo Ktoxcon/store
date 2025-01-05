@@ -29,7 +29,7 @@ export default function Category({ loaderData }: Route.ComponentProps) {
   const category = loaderData as ProductCategory;
 
   return (
-    <Flex direction="column" gap="6">
+    <Flex direction="column" gap="6" maxWidth={{ initial: "100%", lg: "50%" }}>
       <Heading as="h1" size={{ initial: "7", lg: "8" }}>
         Edit Category: {category.name}
       </Heading>

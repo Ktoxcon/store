@@ -29,14 +29,16 @@ export default function Products({ loaderData }: Route.ComponentProps) {
         align={{ initial: "start", lg: "center" }}
         direction={{ initial: "column", lg: "row" }}
       >
-        <Flex flexGrow="1">
+        <Box flexGrow="1">
           <Heading as="h1" size={{ initial: "7", lg: "8" }}>
             Products
           </Heading>
-        </Flex>
-        <Box flexGrow={{ initial: "1", lg: "0" }}>
-          <Button asChild>
-            <AppLink to={routes.admin.newProduct}>Create Product</AppLink>
+        </Box>
+        <Box width={{ initial: "100%", lg: "unset" }}>
+          <Button asChild style={{ width: "100%" }}>
+            <AppLink underline="none" to={routes.admin.newProduct}>
+              Create Product
+            </AppLink>
           </Button>
         </Box>
       </Flex>

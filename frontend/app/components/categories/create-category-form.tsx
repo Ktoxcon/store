@@ -14,7 +14,7 @@ export function CreateCategoryForm() {
   return (
     <Dialog.Root>
       <Dialog.Trigger>
-        <Button>Create Category</Button>
+        <Button style={{ width: "100%" }}>Create Category</Button>
       </Dialog.Trigger>
 
       <Dialog.Content maxWidth="450px">
@@ -40,9 +40,7 @@ export function CreateCategoryForm() {
 
           <Flex gap="3" mt="4" justify="end">
             <Dialog.Close>
-              <Button variant="soft" color="gray">
-                Cancel
-              </Button>
+              <Button color="red">Cancel</Button>
             </Dialog.Close>
             <Dialog.Close>
               <Button

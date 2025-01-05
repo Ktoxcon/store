@@ -47,8 +47,10 @@ export function EditCategoryForm({ category }: EditCategoryFormProps) {
         </Flex>
       </Flex>
       <Flex gap="3" mt="8" justify="end">
-        <Button type="button" variant="soft" color="gray" asChild>
-          <AppLink to={routes.admin.categories}>Cancel</AppLink>
+        <Button type="button" color="red" asChild>
+          <AppLink underline="none" to={routes.admin.categories}>
+            Cancel
+          </AppLink>
         </Button>
         <Button
           type="submit"

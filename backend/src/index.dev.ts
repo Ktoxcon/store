@@ -1,7 +1,5 @@
 import "dotenv/config";
 
-import { start } from "@store/app/start";
-import { createRootUser } from "./lib/db/create-root";
+import { startDev } from "./app/start.dev";
 
-start();
-createRootUser();
+startDev();

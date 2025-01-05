@@ -14,7 +14,7 @@ export async function createRootUser() {
     password,
     name: "Root",
     lastName: "",
-    email: "root",
-    role: UserRoles.ADMIN,
+    userRole: UserRoles.ADMIN,
+    email: process.env.ROOT_EMAIL,
   });
 }

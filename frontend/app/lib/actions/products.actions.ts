@@ -1,6 +1,4 @@
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
-import { uploadImage } from "../files/upload-image";
-import { fromFormDataToObject } from "../http/form-data";
 import type { ProductCategory } from "../types/category";
 import type { List } from "../types/common";
 
@@ -30,25 +28,10 @@ export async function listProducts(
 }
 
 export async function createProduct(request: ActionFunctionArgs["request"]) {
-  const formData = await request.formData();
-  const pictureUploadResult = await uploadImage({
-    formData,
-    fileName: "picture",
-  });
+  const body = await request.formData();
 
-  if (!pictureUploadResult) {
-    return { success: false, error: "Image upload error" };
-  }
-
-  const headers = new Headers(request.headers);
-  headers.delete("content-type");
-  headers.delete("content-length");
-  headers.set("Content-Type", "application/x-www-form-urlencoded");
-
-  const entries = fromFormDataToObject(formData);
-  entries.picture = pictureUploadResult.secure_url;
-
-  const body = new URLSearchParams(entries);
+  const headers = new Headers();
+  headers.set("Cookie", request.headers.get("Cookie")!);
 
   const response = await fetch(`${process.env.APP_BACKEND}/products`, {
     body,
@@ -61,28 +44,10 @@ export async function createProduct(request: ActionFunctionArgs["request"]) {
 }
 
 export async function updateProduct({ params, request }: ActionFunctionArgs) {
-  const formData = await request.formData();
-  const pictureUploadResult = await uploadImage({
-    formData,
-    fileName: "picture",
-  });
+  const body = await request.formData();
 
-  const headers = new Headers(request.headers);
-  headers.delete("content-type");
-  headers.delete("content-length");
-  headers.set("Content-Type", "application/x-www-form-urlencoded");
-
-  if (!pictureUploadResult) {
-    formData.delete("picture");
-  }
-
-  const entries = fromFormDataToObject(formData);
-
-  if (pictureUploadResult) {
-    entries.picture = pictureUploadResult.secure_url;
-  }
-
-  const body = new URLSearchParams(entries);
+  const headers = new Headers();
+  headers.set("Cookie", request.headers.get("Cookie")!);
 
   const response = await fetch(
     `${process.env.APP_BACKEND}/products/${params.id}`,

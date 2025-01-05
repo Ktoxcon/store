@@ -35,6 +35,7 @@ Order.init(
   },
   {
     sequelize: db,
+    paranoid: true,
     tableName: "Orders",
   }
 );

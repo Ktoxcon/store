@@ -28,6 +28,7 @@ OrderItem.init(
   },
   {
     sequelize: db,
+    paranoid: true,
     tableName: "OrderItems",
   }
 );

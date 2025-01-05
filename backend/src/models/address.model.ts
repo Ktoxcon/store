@@ -51,6 +51,7 @@ Address.init(
   },
   {
     sequelize: db,
+    paranoid: true,
     tableName: "Addresses",
   }
 );

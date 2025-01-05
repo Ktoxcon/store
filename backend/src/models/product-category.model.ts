@@ -26,6 +26,7 @@ ProductCategory.init(
   },
   {
     sequelize: db,
+    paranoid: true,
     tableName: "ProductCategories",
   }
 );

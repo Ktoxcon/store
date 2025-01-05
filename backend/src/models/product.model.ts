@@ -31,6 +31,7 @@ Product.init(
   },
   {
     sequelize: db,
+    paranoid: true,
     tableName: "Products",
   }
 );

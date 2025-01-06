@@ -21,7 +21,7 @@ OrderItem.init(
       allowNull: false,
       type: DataTypes.INTEGER,
     },
-    unitPrice: {
+    price: {
       allowNull: false,
       type: DataTypes.FLOAT,
     },

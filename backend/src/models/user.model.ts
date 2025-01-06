@@ -1,3 +1,4 @@
+import { UserRoles } from "@store/lib/constants/roles";
 import { db } from "@store/lib/db";
 import { DataTypes, Model } from "sequelize";
 
@@ -44,8 +45,8 @@ User.init(
     },
     userRole: {
       type: DataTypes.ENUM,
-      values: ["customer", "admin"],
-      defaultValue: "customer",
+      values: Object.values(UserRoles),
+      defaultValue: UserRoles.CUSTOMER,
     },
   },
   {

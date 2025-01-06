@@ -1,5 +1,6 @@
 export default {
   root: "/",
+  about: "/about",
   auth: {
     signin: "/auth/signin",
     signup: "/auth/signup",

@@ -1,11 +1,11 @@
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
-import type { ProductCategory } from "../types/category";
 import type { List } from "../types/common";
+import type { Product } from "../types/product";
 
 export async function getProduct({
   params,
   request,
-}: LoaderFunctionArgs): Promise<ProductCategory> {
+}: LoaderFunctionArgs): Promise<Product> {
   const response = await fetch(
     `${process.env.APP_BACKEND}/products/${params.id}`,
     {
@@ -18,7 +18,7 @@ export async function getProduct({
 
 export async function listProducts(
   request: LoaderFunctionArgs["request"]
-): Promise<List<ProductCategory>> {
+): Promise<List<Product>> {
   const response = await fetch(`${process.env.APP_BACKEND}/products`, {
     headers: request.headers,
   });
@@ -62,10 +62,7 @@ export async function updateProduct({ params, request }: ActionFunctionArgs) {
   return data;
 }
 
-export async function deleteProduct({
-  params,
-  request,
-}: LoaderFunctionArgs): Promise<ProductCategory> {
+export async function deleteProduct({ params, request }: LoaderFunctionArgs) {
   const response = await fetch(
     `${process.env.APP_BACKEND}/products/${params.id}`,
     {

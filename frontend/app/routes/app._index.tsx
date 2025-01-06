@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, Section } from "@radix-ui/themes";
+import { Button, Container, Flex, Heading, Section } from "@radix-ui/themes";
 import { ProductCard } from "@store/components/products/product-card";
 import { AppLink } from "@store/components/ui/app-link";
 import { Carousel } from "@store/components/ui/carousel";
@@ -7,6 +7,7 @@ import { ProtectedRoute } from "@store/lib/auth/decorators";
 import routes from "@store/lib/constants/routes";
 import type { List } from "@store/lib/types/common";
 import type { Product } from "@store/lib/types/product";
+import { groupBy } from "@store/lib/utils/group-by";
 import type { Route } from "./+types/app._index";
 
 export const loader = ProtectedRoute(async ({ request }) => {
@@ -16,6 +17,12 @@ export const loader = ProtectedRoute(async ({ request }) => {
 
 export default function CustomerHome({ loaderData }: Route.ComponentProps) {
   const { items } = loaderData as List<Product>;
+
+  const productsByCategorty = Object.entries(
+    groupBy(items, ({ ProductCategory }) => {
+      return ProductCategory.name;
+    })
+  );
 
   return (
     <>
@@ -51,17 +58,22 @@ export default function CustomerHome({ loaderData }: Route.ComponentProps) {
             Welcome Back
           </Heading>
           <Button asChild size="4">
-            <AppLink to={routes.customer.orders}>Discover Products</AppLink>
+            <AppLink to={routes.customer.orders}>Check Out My Orders</AppLink>
           </Button>
         </Flex>
       </Section>
-      <Section px="4">
-        <Carousel>
-          {items.map((product) => (
-            <ProductCard product={product} />
-          ))}
-        </Carousel>
-      </Section>
+      {productsByCategorty.map(([category, products]) => (
+        <Section size="1" key={category}>
+          <Container px="4">
+            <Heading>{category}</Heading>
+            <Carousel scrollStep={200}>
+              {products.map((product) => (
+                <ProductCard key={product.id} size="sm" product={product} />
+              ))}
+            </Carousel>
+          </Container>
+        </Section>
+      ))}
     </>
   );
 }

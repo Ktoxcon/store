@@ -23,9 +23,3 @@ export function groupBy<Item>(
 
   return groups;
 }
-
-const group = groupBy([{ name: "hello", world: "mike" }], ({ name }) => {
-  return name === "hello" ? "greeting" : "no";
-});
-
-console.log(group);

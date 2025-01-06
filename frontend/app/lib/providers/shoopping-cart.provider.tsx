@@ -7,50 +7,53 @@ export function ShoppingCartProvider({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [cart, setCart] = useLocalStorage<Record<string, CartItem>>("cart", {});
+  const [items, setItems] = useLocalStorage<Record<string, CartItem>>(
+    "cart",
+    {}
+  );
 
   const clear = () => {
-    setCart({});
+    setItems({});
   };
 
   const addItem = (cartItem: Omit<CartItem, "quantity">) => {
-    const item = cart[cartItem.productId];
+    const item = items[cartItem.productId];
 
     if (!item) {
       const updatedCart = {
-        ...cart,
+        ...items,
         [cartItem.productId]: { ...cartItem, quantity: 1 },
       };
 
-      setCart(updatedCart);
+      setItems(updatedCart);
       return;
     }
 
     const updatedCart = {
-      ...cart,
+      ...items,
       [cartItem.productId]: { ...cartItem, quantity: item.quantity + 1 },
     };
 
-    setCart(updatedCart);
+    setItems(updatedCart);
   };
 
   const removeItem = (id: string) => {
-    const { [id]: _, ...rest } = cart;
-    setCart(rest);
+    const { [id]: _, ...rest } = items;
+    setItems(rest);
   };
 
   const decreaseItemQuantity = (itemId: string) => {
-    const item = cart[itemId];
+    const item = items[itemId];
 
     if (!item) return;
 
     if (item.quantity > 1) {
       const updatedCart = {
-        ...cart,
+        ...items,
         [item.productId]: { ...item, quantity: item.quantity - 1 },
       };
 
-      setCart(updatedCart);
+      setItems(updatedCart);
       return;
     }
 
@@ -59,7 +62,7 @@ export function ShoppingCartProvider({
 
   return (
     <ShoppingCartContext.Provider
-      value={{ cart, clear, addItem, removeItem, decreaseItemQuantity }}
+      value={{ items, clear, addItem, removeItem, decreaseItemQuantity }}
     >
       {children}
     </ShoppingCartContext.Provider>

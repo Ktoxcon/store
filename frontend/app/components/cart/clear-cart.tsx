@@ -2,13 +2,13 @@ import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 import { useShoppingCart } from "@store/lib/hooks/use-shopping-cart";
 
 export function ClearShoppingCart() {
-  const { cart, clear } = useShoppingCart();
-  const items = Object.values(cart);
+  const cart = useShoppingCart();
+  const products = Object.values(cart.items);
 
   return (
     <AlertDialog.Root>
       <AlertDialog.Trigger>
-        <Button variant="soft" color="red" disabled={items.length === 0}>
+        <Button variant="soft" color="red" disabled={products.length === 0}>
           Clear Cart
         </Button>
       </AlertDialog.Trigger>
@@ -28,7 +28,7 @@ export function ClearShoppingCart() {
             <Button
               color="red"
               variant="solid"
-              onClick={() => clear()}
+              onClick={() => cart.clear()}
               style={{ width: "100%" }}
             >
               Delete

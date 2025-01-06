@@ -1,8 +1,13 @@
 import { Badge } from "@radix-ui/themes";
+import type { CartItem } from "@store/lib/types/order-item";
 
-export type CartBadgeProps = { total: number };
+export type CartBadgeProps = { items: CartItem[] };
 
-export function CartBadge({ total }: CartBadgeProps) {
+export function CartBadge({ items }: CartBadgeProps) {
+  const total = items.reduce((total: number, item: CartItem) => {
+    return total + item.quantity;
+  }, 0);
+
   if (!total) return;
 
   return (

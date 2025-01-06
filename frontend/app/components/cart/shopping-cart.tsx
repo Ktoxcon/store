@@ -16,27 +16,27 @@ import { CartItem } from "./cart-item";
 import { ClearShoppingCart } from "./clear-cart";
 
 export function ShoppingCart() {
-  const { cart } = useShoppingCart();
-  const items = Object.values(cart);
+  const cart = useShoppingCart();
+  const products = Object.values(cart.items);
 
   return (
     <Popover.Root>
       <Popover.Trigger>
         <IconButton size="3" radius="full" style={{ position: "relative" }}>
-          <CartBadge total={items.length} />
+          <CartBadge items={products} />
           <ShoppingCartIcon width="20px" height="20px" />
         </IconButton>
       </Popover.Trigger>
       <Popover.Content width={{ initial: "320px", lg: "360px" }}>
         <Flex direction="column" gapY="3">
-          {items.length > 0 ? (
+          {products.length > 0 ? (
             <ScrollArea
               type="always"
               scrollbars="vertical"
               style={{ maxHeight: "210px" }}
             >
               <Flex direction="column" gapY="1">
-                {items.map((item) => (
+                {products.map((item) => (
                   <CartItem key={item.productId} item={item} />
                 ))}
               </Flex>
@@ -51,8 +51,8 @@ export function ShoppingCart() {
           >
             <ClearShoppingCart />
             <Popover.Close>
-              <Button asChild size="2" disabled={items.length === 0}>
-                <AppLink underline="none" to={routes.customer.cart}>
+              <Button asChild size="2" disabled={products.length === 0}>
+                <AppLink underline="none" to={routes.customer.checkout}>
                   Proceed to checkout
                 </AppLink>
               </Button>

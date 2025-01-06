@@ -9,6 +9,7 @@ export default {
   },
   customer: {
     home: "/app",
+    cart: "/app/cart",
     orders: "/app/orders",
     profile: "/app/profile",
     addresses: "/app/addresses",

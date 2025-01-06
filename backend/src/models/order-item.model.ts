@@ -4,7 +4,7 @@ import { DataTypes, Model } from "sequelize";
 export class OrderItem extends Model {
   declare id: number;
   declare quantity: number;
-  declare unitPrice: number;
+  declare price: number;
   declare orderId: string;
   declare productId: string;
 }

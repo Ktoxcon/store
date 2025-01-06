@@ -26,5 +26,5 @@ AddressRoutes.delete(
   "/:id",
   AuthMiddleware,
   CustomerMiddleware,
-  AddressesController.listAddresses
+  AddressesController.deleteAddress
 );

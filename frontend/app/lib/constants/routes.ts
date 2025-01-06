@@ -9,12 +9,13 @@ export default {
   },
   customer: {
     home: "/app",
-    cart: "/app/cart",
     orders: "/app/orders",
     profile: "/app/profile",
+    checkout: "/app/checkout",
     addresses: "/app/addresses",
+    newAddress: "/app/addresses/new",
     order: (id: string) => `/app/order/${id}`,
-    address: (id: string) => `/app/address/${id}`,
+    address: (id: string) => `/app/addresses/${id}`,
   },
   admin: {
     home: "/admin",

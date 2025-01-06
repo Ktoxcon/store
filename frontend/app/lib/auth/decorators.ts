@@ -66,3 +66,34 @@ export function ProtectedAdminRoute(
     });
   };
 }
+
+export function ProtectedCustomerRoute(
+  loaderOrAction?: LoaderFunction | ActionFunction
+) {
+  return async function ({
+    request,
+    context,
+    ...restArgs
+  }: LoaderFunctionArgs | ActionFunctionArgs) {
+    const profile = await profileCookie.getSession(
+      request.headers.get("Cookie")
+    );
+
+    if (!profile.get("id")) {
+      return redirect(routes.auth.signin);
+    }
+
+    if (profile.get("userRole") !== UserRoles.CUSTOMER) {
+      return redirect(routes.admin.home);
+    }
+
+    if (!loaderOrAction) return null;
+
+    //@ts-expect-error Error due to 'this' not having a specific type
+    return await loaderOrAction.call(this, {
+      request,
+      context,
+      ...restArgs,
+    });
+  };
+}

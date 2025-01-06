@@ -1,6 +1,6 @@
 # Store
 
-This mono-repository contains both the backend and frontend for the "Desafio 360" project.
+This mono-repository contains both the backend and frontend applications for the "Desafio 360" project.
 
 ## Prerequisites
 
@@ -34,16 +34,16 @@ To run the project correctly, there are a few tools and processes that must be i
 - **Environment Variables**  
   You need a `.env` file where you can store sensitive values such as connection URLs, API keys, and more. This file must be located in the root folder of each application, and you can use the existing `.env.sample` file in each app as a reference.
 
-  > **Important**: The file must be named `.env` because other filenames will not be detected by default. If you want to have multiple environment files, you must manually configure the application to do so.
+>[!IMPORTANT]
+> The file must be named `.env` because other filenames will not be detected by default. If you want to have multiple environment files, you must manually configure the application to do so.
 
   This file is not tracked by Git, so it is safe to include your credentials there.
 
+### Third Party Tools
 - **Cloudinary**  
   This project uses Cloudinary to store images remotely. In order to access the platform programmatically, it is recommended to create a free Cloudinary account and follow the setup instructions. Then, you can add the relevant values (Cloud Name, Client ID, etc.) to your `.env` file.
 
-Please note that if you do not follow the prerequisites guide, it is likely that any of the project’s applications may not function correctly or may not run at all.
-
-## Running the Project
+### Project Dependencies
 
 After installing the required tools and completing the necessary setup, you must install each application's dependencies before running them. To do this, navigate to the project's root directory and run:
 
@@ -51,17 +51,29 @@ After installing the required tools and completing the necessary setup, you must
 pnpm install
 ```
 
-Once the installation process is complete, you can run the following commands to start each application.
+Once the installation process is complete, you can follow the next section commands to run the project.  
+
+> [!IMPORTANT]  
+> Please note that if you do not follow the prerequisites guide, it is likely that any of the project’s applications may not function correctly or may not run at all.
+
+## Running the Project 
 
 ### Backend (Development Mode)
 
-To run the backend in development mode, open your terminal and run:
+To run the backend app in development mode, open your terminal and run:
 
 ```bash
-pnpm start:dev
+pnpm dev
+```
+### Frontend (Development Mode)
+
+To run the frontend app in development mode, open your terminal and run:
+
+```bash
+pnpm dev
 ```
 
-You can execute this command either from the project's root directory or by navigating to the backend folder (where the backend application is located). Make sure you have properly configured any required environment variables in the `.env` file within the backend folder before running the command.
+You can execute this command either from the project's root directory or by navigating to where each application is located. Make sure you have properly configured any required environment variables in the `.env` file within each app folder before running the command.
 
 ## FAQ
 

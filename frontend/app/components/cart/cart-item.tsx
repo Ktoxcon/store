@@ -3,38 +3,43 @@ import {
   Box,
   Card,
   Flex,
+  Grid,
   IconButton,
   Inset,
   Strong,
   Text,
+  type BoxProps,
 } from "@radix-ui/themes";
 import { useShoppingCart } from "@store/lib/hooks/use-shopping-cart";
 import type { CartItem } from "@store/lib/types/order-item";
 
-export type CartItemProps = { item: CartItem };
+export type CartItemProps = { item: CartItem; size?: "sm" | "lg" } & BoxProps;
 
-export function CartItem({ item }: CartItemProps) {
+export function CartItem({ item, size = "lg", ...restProps }: CartItemProps) {
   const { addItem, removeItem, decreaseItemQuantity } = useShoppingCart();
 
   return (
-    <Box>
+    <Box {...restProps}>
       <Card>
-        <Flex gap="2">
+        <Grid columns="20% 70% 10%">
           <Inset side="left" clip="padding-box">
-            <img
-              src={item.picture}
-              alt={`${item.name} picture`}
-              style={{
-                width: "80px",
-                height: "120px",
-                display: "block",
-                objectFit: "cover",
-              }}
-            />
+            <Box width="100%" height="100%">
+              <img
+                src={item.picture}
+                alt={`${item.name} picture`}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  display: "block",
+                  objectFit: "cover",
+                }}
+              />
+            </Box>
           </Inset>
-
-          <Flex justify="between" direction="column" width="150px">
-            <Text truncate>{item.name}</Text>
+          <Flex p="4" gap="2" justify="between" direction="column">
+            <Text as="p" truncate>
+              {item.name}
+            </Text>
             <Text>
               <Strong>x{item.quantity}</Strong>
             </Text>
@@ -51,12 +56,12 @@ export function CartItem({ item }: CartItemProps) {
             </Flex>
           </Flex>
 
-          <Flex justify="end" flexGrow="1">
+          <Flex justify="center">
             <IconButton size="1" onClick={() => removeItem(item.productId)}>
               <Cross1Icon />
             </IconButton>
           </Flex>
-        </Flex>
+        </Grid>
       </Card>
     </Box>
   );

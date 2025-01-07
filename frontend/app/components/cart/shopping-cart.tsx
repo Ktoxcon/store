@@ -1,12 +1,4 @@
-import {
-  Button,
-  Container,
-  Flex,
-  IconButton,
-  Popover,
-  ScrollArea,
-} from "@radix-ui/themes";
-
+import { Button, Container, Flex, IconButton, Popover } from "@radix-ui/themes";
 import routes from "@store/lib/constants/routes";
 import { useShoppingCart } from "@store/lib/hooks/use-shopping-cart";
 import { ShoppingCartIcon } from "../icons/cart";
@@ -27,24 +19,25 @@ export function ShoppingCart() {
           <ShoppingCartIcon width="20px" height="20px" />
         </IconButton>
       </Popover.Trigger>
-      <Popover.Content width={{ initial: "320px", lg: "360px" }}>
-        <Flex direction="column" gapY="3">
+      <Popover.Content asChild>
+        <Flex direction="column" width={{ initial: "300px", lg: "360px" }}>
           {products.length > 0 ? (
-            <ScrollArea
-              type="always"
-              scrollbars="vertical"
-              style={{ maxHeight: "210px" }}
+            <Flex
+              gap="1"
+              height="180px"
+              overflowY="scroll"
+              direction="column"
+              style={{ scrollbarWidth: "thin" }}
             >
-              <Flex direction="column" gapY="1">
-                {products.map((item) => (
-                  <CartItem key={item.productId} item={item} />
-                ))}
-              </Flex>
-            </ScrollArea>
+              {products.map((item) => (
+                <CartItem item={item} key={item.productId} />
+              ))}
+            </Flex>
           ) : (
             <Container>Your cart is empty</Container>
           )}
           <Flex
+            pt="3"
             gap="4"
             justify="end"
             direction={{ initial: "column-reverse", lg: "row" }}

@@ -1,12 +1,12 @@
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import { fromFormDataToObject } from "../http/form-data";
+import type { Address } from "../types/address";
 import type { List } from "../types/common";
-import type { Product } from "../types/product";
 
 export async function getAddress({
   params,
   request,
-}: LoaderFunctionArgs): Promise<Product> {
+}: LoaderFunctionArgs): Promise<Address> {
   const response = await fetch(
     `${process.env.APP_BACKEND}/addresses/${params.id}`,
     {
@@ -20,7 +20,7 @@ export async function getAddress({
 
 export async function listAddresses(
   request: LoaderFunctionArgs["request"]
-): Promise<List<Product>> {
+): Promise<List<Address>> {
   const response = await fetch(`${process.env.APP_BACKEND}/addresses`, {
     headers: request.headers,
   });

@@ -33,7 +33,7 @@ export async function createCategory(request: ActionFunctionArgs["request"]) {
   const entries = fromFormDataToObject(formData);
   const body = new URLSearchParams(entries);
 
-  const response = await fetch("http://localhost:3300/categories", {
+  const response = await fetch(`${process.env.APP_BACKEND}/categories`, {
     body,
     method: "POST",
     headers: request.headers,

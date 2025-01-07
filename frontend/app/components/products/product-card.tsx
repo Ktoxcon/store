@@ -4,6 +4,7 @@ import { QuetzalCurrencyFormatter } from "@store/lib/fomatters/currency";
 import { useShoppingCart } from "@store/lib/hooks/use-shopping-cart";
 import type { Product } from "@store/lib/types/product";
 import { AppLink } from "../ui/app-link";
+import { ProductBadge } from "./product-badge";
 
 export type ProductCardProps = {
   product: Product;
@@ -24,13 +25,14 @@ export function ProductCard({ product, size = "lg" }: ProductCardProps) {
   };
 
   return (
-    <Box width={boxWidth} height="100%">
-      <Card>
+    <Box width={boxWidth} height="100%" position="relative">
+      <Card style={{ position: "relative" }}>
         <Flex direction={cardDirection}>
           <Inset
             side={imageSide}
             clip="padding-box"
             pb={{ initial: "current", lg: "0" }}
+            style={{ position: "relative" }}
           >
             <img
               src={product.picture}
@@ -40,10 +42,12 @@ export function ProductCard({ product, size = "lg" }: ProductCardProps) {
                 objectFit: "cover",
                 width: "100%",
                 height: "140px",
+                filter: product.quantity > 0 ? "unset" : "grayscale(90%)",
               }}
             />
           </Inset>
           <Flex gap="2" direction="column" p="2">
+            <ProductBadge quantity={product.quantity} />
             <Flex direction="column">
               <Text truncate>
                 <AppLink
@@ -61,7 +65,11 @@ export function ProductCard({ product, size = "lg" }: ProductCardProps) {
               </Text>
             </Flex>
             <Flex justify="end" width="100%">
-              <Button style={{ width: "100%" }} onClick={handleAddToCartClick}>
+              <Button
+                style={{ width: "100%" }}
+                onClick={handleAddToCartClick}
+                disabled={product.quantity === 0}
+              >
                 Add to cart
               </Button>
             </Flex>

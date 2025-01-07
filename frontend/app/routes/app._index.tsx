@@ -19,7 +19,7 @@ export const loader = ProtectedCustomerRoute(async ({ request }) => {
 export default function CustomerHome({ loaderData }: Route.ComponentProps) {
   const { items } = loaderData as List<Product>;
 
-  const productsByCategorty = Object.entries(
+  const productsByCategory = Object.entries(
     groupBy(items, ({ ProductCategory }) => {
       return ProductCategory.name;
     })
@@ -63,7 +63,7 @@ export default function CustomerHome({ loaderData }: Route.ComponentProps) {
           </Button>
         </Flex>
       </Section>
-      {productsByCategorty.map(([category, products]) => (
+      {productsByCategory.map(([category, products]) => (
         <Section size="1" key={category}>
           <Container px="4">
             <Heading>{category}</Heading>

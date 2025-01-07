@@ -9,6 +9,7 @@ export class Order extends Model {
   declare cancelled: boolean;
   declare confirmedAt: Date;
   declare cancelledAt: Date;
+  declare deliveryStatus: string;
 }
 
 Order.init(

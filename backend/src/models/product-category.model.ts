@@ -1,4 +1,5 @@
 import { db } from "@store/lib/db";
+import { afterUpdate } from "@store/lib/db/hooks/category.hooks";
 import { DataTypes, Model } from "sequelize";
 import { Product } from "./product.model";
 
@@ -34,21 +35,7 @@ ProductCategory.init(
       afterDestroy(instance) {
         Product.destroy({ where: { categoryId: instance.id } });
       },
-      afterUpdate(instance) {
-        if (instance.changed("deletedAt") && instance.deletedAt === null) {
-          Product.update(
-            { active: instance.deletedAt },
-            { where: { categoryId: instance.id } }
-          );
-        }
-
-        if (instance.changed("active")) {
-          Product.update(
-            { active: instance.active },
-            { where: { categoryId: instance.id } }
-          );
-        }
-      },
+      afterUpdate,
     },
   }
 );

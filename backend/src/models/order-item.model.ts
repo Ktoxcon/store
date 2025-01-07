@@ -1,4 +1,5 @@
 import { db } from "@store/lib/db";
+import { VerifyProductStock } from "@store/lib/db/hooks/order-item.hooks";
 import { DataTypes, Model } from "sequelize";
 
 export class OrderItem extends Model {
@@ -30,5 +31,8 @@ OrderItem.init(
     sequelize: db,
     paranoid: true,
     tableName: "OrderItems",
+    hooks: {
+      beforeBulkCreate: VerifyProductStock,
+    },
   }
 );

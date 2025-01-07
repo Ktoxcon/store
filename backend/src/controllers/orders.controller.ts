@@ -1,11 +1,12 @@
+import { db } from "@store/lib/db";
 import { IdParamSchema } from "@store/lib/validators/model.schemas";
 import {
-  ConfirmOrderRequestBodySchema,
   CreateOrderRequestBodySchema,
   ListOrdersRequestBodySchema,
   UpdateOrderRequestBodySchema,
 } from "@store/lib/validators/order.schemas";
 import { Address } from "@store/models/address.model";
+import { OrderItem } from "@store/models/order-item.model";
 import { Order } from "@store/models/order.model";
 import { User } from "@store/models/user.model";
 import type { Request, Response } from "express";
@@ -37,12 +38,13 @@ export class OrdersController {
   }
 
   static async createOrder(request: Request, response: Response) {
+    const transaction = await db.transaction();
     try {
-      const { userId, addressId } = CreateOrderRequestBodySchema.parse(
+      const { userId, addressId, items } = CreateOrderRequestBodySchema.parse(
         request.body
       );
 
-      const userExists = await User.findByPk(userId);
+      const userExists = await User.findByPk(userId, { transaction });
 
       if (!userExists) {
         response.status(404).send({ success: false, error: "User not found." });
@@ -51,8 +53,8 @@ export class OrdersController {
 
       const addressExists = await Address.findOne({
         where: {
+          userId,
           id: addressId,
-          UserId: userId,
         },
       });
 
@@ -63,13 +65,32 @@ export class OrdersController {
         return;
       }
 
-      const newOrder = await Order.create({
-        UserId: userId,
-        AddressId: addressId,
+      const total = items.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      );
+
+      const order = await Order.create(
+        {
+          total,
+          userId,
+          addressId,
+        },
+        { transaction }
+      );
+
+      const orderItems = items.map((item) => {
+        return { ...item, orderId: order.id };
       });
 
-      response.send({ success: true, data: newOrder });
+      await OrderItem.bulkCreate(orderItems, { transaction, hooks: true });
+
+      await transaction.commit();
+
+      response.send({ success: true, data: order });
     } catch (error) {
+      await transaction.rollback();
+
       if (error instanceof Error) {
         const errorDetails =
           error instanceof ZodError ? error.flatten() : error.message;
@@ -80,11 +101,13 @@ export class OrdersController {
   }
 
   static async updateOrder(request: Request, response: Response) {
+    const transaction = await db.transaction();
     try {
       const id = IdParamSchema.parse(request.params.id);
-      const { addressId } = UpdateOrderRequestBodySchema.parse(request.body);
+      const { addressId, ...restUploadPayload } =
+        UpdateOrderRequestBodySchema.parse(request.body);
 
-      const order = await Order.findByPk(id);
+      const order = await Order.findByPk(id, { transaction });
 
       if (!order) {
         response
@@ -93,75 +116,30 @@ export class OrdersController {
         return;
       }
 
-      const addressExists = await Address.findByPk(addressId);
+      if (addressId) {
+        const addressExists = await Address.findByPk(addressId, {
+          transaction,
+        });
 
-      if (!addressExists) {
-        response
-          .status(404)
-          .send({ success: false, error: "Address not found." });
-        return;
+        if (!addressExists) {
+          response
+            .status(404)
+            .send({ success: false, error: "Address not found." });
+          return;
+        }
       }
 
-      await Order.update({ AddressId: addressId }, { where: { id } });
+      await Order.update(
+        { addressId, ...restUploadPayload },
+        { where: { id }, transaction }
+      );
+
+      await transaction.commit();
 
       response.send({ success: true });
     } catch (error) {
-      if (error instanceof Error) {
-        const errorDetails =
-          error instanceof ZodError ? error.flatten() : error.message;
+      await transaction.rollback();
 
-        response.status(400).send({ success: false, error: errorDetails });
-      }
-    }
-  }
-
-  static async updateOrderConfirmationStatus(
-    request: Request,
-    response: Response
-  ) {
-    try {
-      const id = IdParamSchema.parse(request.params.id);
-      const { confirmed } = ConfirmOrderRequestBodySchema.parse(request.body);
-
-      const order = await Order.findByPk(id);
-
-      if (!order) {
-        response
-          .status(404)
-          .send({ success: false, error: "Order not found." });
-        return;
-      }
-
-      await Order.update({ confirmed }, { where: { id } });
-
-      response.send({ success: true });
-    } catch (error) {
-      if (error instanceof Error) {
-        const errorDetails =
-          error instanceof ZodError ? error.flatten() : error.message;
-
-        response.status(400).send({ success: false, error: errorDetails });
-      }
-    }
-  }
-
-  static async cancelOrder(request: Request, response: Response) {
-    try {
-      const id = IdParamSchema.parse(request.params.id);
-
-      const order = await Order.findByPk(id);
-
-      if (!order) {
-        response
-          .status(404)
-          .send({ success: false, error: "Order not found." });
-        return;
-      }
-
-      await Order.update({ cancelled: true }, { where: { id } });
-
-      response.send({ success: true });
-    } catch (error) {
       if (error instanceof Error) {
         const errorDetails =
           error instanceof ZodError ? error.flatten() : error.message;
@@ -172,21 +150,27 @@ export class OrdersController {
   }
 
   static async listOrders(request: Request, response: Response) {
+    const transaction = await db.transaction();
     try {
-      const { limit, offset, userId, addressId } =
-        ListOrdersRequestBodySchema.parse(request.body);
+      const { limit, offset, ...params } = ListOrdersRequestBodySchema.parse(
+        request.body
+      );
 
       const { count, rows } = await Order.findAndCountAll({
         where: {
-          UserId: userId,
-          AddressId: addressId,
+          ...params,
         },
         limit,
         offset,
+        transaction,
       });
+
+      await transaction.commit();
 
       response.send({ success: true, data: { count, items: rows } });
     } catch (error) {
+      await transaction.rollback();
+
       if (error instanceof Error) {
         const errorDetails =
           error instanceof ZodError ? error.flatten() : error.message;

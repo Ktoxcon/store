@@ -19,14 +19,7 @@ export function CreateAddressForm() {
   return (
     <Form method="POST" action={routes.customer.newAddress}>
       <Flex gap="3" direction="column">
-        <Box display="none">
-          <TextField.Root
-            id="user"
-            name="userId"
-            type="hidden"
-            value={user?.id}
-          />
-        </Box>
+        <input id="user" name="userId" type="hidden" value={user?.id} />
         <Box>
           <label htmlFor="name">
             <Text as="div" size="2" mb="1" weight="bold">

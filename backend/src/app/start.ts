@@ -10,6 +10,8 @@ export async function start() {
       console.info(`Server listening in port: ${AppConfig.port}`);
     });
   } catch (error) {
+    console.log(error);
+
     if (error instanceof Error) {
       console.error(error.message);
     }

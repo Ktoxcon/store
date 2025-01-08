@@ -5,6 +5,7 @@ export const CreateUserFormSchema = z.object({
   name: z.string().nonempty({ message: "Name should not be empty." }),
   lastName: z.string().nonempty({ message: "Last name should not be empty." }),
   email: z.string().nonempty({ message: "Email should not be empty." }).email(),
+  status: z.string().optional(),
 });
 
-export const EditUserFormSchema = CreateUserFormSchema.pick({ userRole: true });
+export const EditUserFormSchema = CreateUserFormSchema.partial();

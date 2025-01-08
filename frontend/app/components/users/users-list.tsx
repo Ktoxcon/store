@@ -1,5 +1,16 @@
-import { Badge, Container, Flex, Table, Text } from "@radix-ui/themes";
+import { Pencil1Icon } from "@radix-ui/react-icons";
+import {
+  Badge,
+  Container,
+  Flex,
+  IconButton,
+  Table,
+  Text,
+  Tooltip,
+} from "@radix-ui/themes";
+import routes from "@store/lib/constants/routes";
 import type { User } from "@store/lib/types/user";
+import { AppLink } from "../ui/app-link";
 import { InactiveUserForm } from "./inactive-user-form";
 
 export type UsersListProps = {
@@ -57,6 +68,13 @@ export function UsersList({ users }: UsersListProps) {
                 <Table.Cell>
                   <Flex align="center" gap="4">
                     <InactiveUserForm id={user.id} />
+                    <Tooltip content="Edit Category">
+                      <IconButton asChild variant="ghost">
+                        <AppLink to={routes.admin.user(user.id)}>
+                          <Pencil1Icon />
+                        </AppLink>
+                      </IconButton>
+                    </Tooltip>
                   </Flex>
                 </Table.Cell>
               </Table.Row>

@@ -1,17 +1,17 @@
 import { Select } from "@radix-ui/themes";
 import { Controller, type Control } from "react-hook-form";
 
-export type StatusSelectorProps = {
+export type UserStatusSelectorProps = {
   name: string;
   control: Control;
   defaultValue?: string;
 };
 
-export function StatusSelector({
+export function UserStatusSelector({
   name,
   control,
   defaultValue = "",
-}: StatusSelectorProps) {
+}: UserStatusSelectorProps) {
   return (
     <Controller
       name={name}
@@ -26,8 +26,12 @@ export function StatusSelector({
           <Select.Trigger />
           <Select.Content>
             <Select.Group>
-              <Select.Item value="true">Active</Select.Item>
-              <Select.Item value="false">Inactive</Select.Item>
+              <Select.Item key="inactive" value="INACTIVE">
+                Inactive
+              </Select.Item>
+              <Select.Item key="active" value="ACTIVE">
+                Active
+              </Select.Item>
             </Select.Group>
           </Select.Content>
         </Select.Root>

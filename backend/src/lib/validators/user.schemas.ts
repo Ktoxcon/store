@@ -6,6 +6,7 @@ export const CreateUserRequestBodySchema = z.object({
   name: z.string().nonempty(),
   userRole: z.string().nonempty(),
   lastName: z.string().nonempty(),
+  status: z.string().optional(),
 });
 
 export const EditUserSchema = CreateUserRequestBodySchema.partial();

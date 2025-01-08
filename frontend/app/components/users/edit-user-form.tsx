@@ -1,24 +1,40 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Flex } from "@radix-ui/themes";
+import { Button, Flex, Text } from "@radix-ui/themes";
 import routes from "@store/lib/constants/routes";
-import type { Order } from "@store/lib/types/orders";
-import { EditCategoryFormSchema } from "@store/lib/validators/category.schemas";
+import type { User } from "@store/lib/types/user";
+import { EditUserFormSchema } from "@store/lib/validators/user.schema";
 import { useForm } from "react-hook-form";
 import { Form, useNavigation } from "react-router";
 import { AppLink } from "../ui/app-link";
+import { UserStatusSelector } from "./user-status-selector";
+import { UserSummary } from "./user-summary";
 
-export type EditOrderFormProps = { order: Order };
+export type EditUserFormProps = { user: User };
 
-export function EditForm({ order }: EditOrderFormProps) {
+export function EditUserForm({ user }: EditUserFormProps) {
   const navigation = useNavigation();
   const { register, control, formState } = useForm({
     mode: "onChange",
-    resolver: zodResolver(EditCategoryFormSchema),
+    resolver: zodResolver(EditUserFormSchema),
   });
 
   return (
-    <Form method="PATCH" action={routes.admin.order(order.id.toString())}>
-      <Flex direction="column" gap="6"></Flex>
+    <Form method="PATCH" action={routes.admin.user(user.id)}>
+      <Flex py="4">
+        <UserSummary user={user} />
+      </Flex>
+      <Flex py="4" direction="column" gap="2">
+        <label htmlFor="name">
+          <Text as="div" size="2" mb="1" weight="bold">
+            New User Status
+          </Text>
+        </label>
+        <UserStatusSelector
+          control={control}
+          defaultValue={user.status}
+          {...register("status")}
+        />
+      </Flex>
       <Flex
         py="8"
         gap="3"
@@ -26,7 +42,7 @@ export function EditForm({ order }: EditOrderFormProps) {
         direction={{ initial: "column-reverse", lg: "row" }}
       >
         <Button type="button" color="red" variant="outline" asChild>
-          <AppLink underline="none" to={routes.admin.categories}>
+          <AppLink underline="none" to={routes.admin.users}>
             Cancel
           </AppLink>
         </Button>

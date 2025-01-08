@@ -9,16 +9,16 @@ export function RejectOrderAction({ order, size = "sm" }: OrderActionProps) {
   return (
     <AlertDialog.Root>
       <AlertDialog.Trigger>
-        <Tooltip content="Reject Order">
-          <Button
-            color="amber"
-            variant={size === "sm" ? "ghost" : "solid"}
-            disabled={order.status !== OrderStatus.PENDING}
-          >
+        <Button
+          color="amber"
+          variant={size === "sm" ? "ghost" : "solid"}
+          disabled={order.status !== OrderStatus.PENDING}
+        >
+          <Tooltip content="Reject Order">
             <CrossCircledIcon />
-            {size === "sm" ? "" : "Reject Order"}
-          </Button>
-        </Tooltip>
+          </Tooltip>
+          {size === "sm" ? "" : "Reject Order"}
+        </Button>
       </AlertDialog.Trigger>
       <AlertDialog.Content maxWidth="450px">
         <AlertDialog.Title>

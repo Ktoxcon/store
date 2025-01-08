@@ -9,16 +9,16 @@ export function CancelOrderAction({ order, size = "sm" }: OrderActionProps) {
   return (
     <AlertDialog.Root>
       <AlertDialog.Trigger>
-        <Tooltip content="Cancel Order">
-          <Button
-            color="red"
-            variant={size === "sm" ? "ghost" : "solid"}
-            disabled={order.status !== OrderStatus.PENDING}
-          >
+        <Button
+          color="red"
+          variant={size === "sm" ? "ghost" : "solid"}
+          disabled={order.status !== OrderStatus.PENDING}
+        >
+          <Tooltip content="Cancel Order">
             <CrossCircledIcon />
-            {size === "sm" ? "" : "Cancel Order"}
-          </Button>
-        </Tooltip>
+          </Tooltip>
+          {size === "sm" ? "" : "Cancel Order"}
+        </Button>
       </AlertDialog.Trigger>
       <AlertDialog.Content maxWidth="450px">
         <AlertDialog.Title>

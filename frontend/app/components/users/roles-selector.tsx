@@ -24,7 +24,7 @@ export function RolesSelector({
             defaultValue={defaultValue}
             onValueChange={field.onChange}
           >
-            <Select.Trigger style={{ width: "100%" }} placeholder="User Role" />
+            <Select.Trigger style={{ width: "100%" }} placeholder="User role" />
             <Select.Content>
               <Select.Group>
                 <Select.Item key="admin" value="admin">

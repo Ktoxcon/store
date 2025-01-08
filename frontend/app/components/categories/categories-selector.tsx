@@ -31,7 +31,7 @@ export function CategoriesSelector({
           >
             <Select.Trigger
               style={{ width: "100%" }}
-              placeholder="Product Category"
+              placeholder="Product category"
             />
             <Select.Content>
               <Select.Group>

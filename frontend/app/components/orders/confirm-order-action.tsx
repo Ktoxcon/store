@@ -9,14 +9,15 @@ export function ConfirmOrderAction({ order, size = "sm" }: OrderActionProps) {
   return (
     <AlertDialog.Root>
       <AlertDialog.Trigger>
-        <Tooltip content="Confirm Order">
-          <Button
-            variant={size === "sm" ? "ghost" : "solid"}
-            disabled={order.status !== OrderStatus.PENDING}
-          >
-            <CheckCircledIcon /> {size === "sm" ? "" : "Confirm Order"}
-          </Button>
-        </Tooltip>
+        <Button
+          variant={size === "sm" ? "ghost" : "solid"}
+          disabled={order.status !== OrderStatus.PENDING}
+        >
+          <Tooltip content="Confirm Order">
+            <CheckCircledIcon />
+          </Tooltip>
+          {size === "sm" ? "" : "Confirm Order"}
+        </Button>
       </AlertDialog.Trigger>
       <AlertDialog.Content maxWidth="450px">
         <AlertDialog.Title>

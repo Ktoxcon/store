@@ -12,8 +12,8 @@ import type { Product } from "@store/lib/types/product";
 import { groupBy } from "@store/lib/utils/group-by";
 import type { Route } from "./+types/app_._index";
 
-export const loader = ProtectedCustomerRoute(async ({ request }) => {
-  const response = await listProducts(request);
+export const loader = ProtectedCustomerRoute(async ({ request, ...args }) => {
+  const response = await listProducts({ ...args, request });
   return response;
 });
 

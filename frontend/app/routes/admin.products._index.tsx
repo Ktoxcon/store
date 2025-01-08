@@ -1,7 +1,6 @@
 import { Box, Button, Flex, Heading } from "@radix-ui/themes";
 import { ProductsList } from "@store/components/products/products-list";
 import { AppLink } from "@store/components/ui/app-link";
-import { createCategory } from "@store/lib/actions/categories.actions";
 import { listProducts } from "@store/lib/actions/products.actions";
 import { ProtectedAdminRoute } from "@store/lib/auth/decorators";
 import routes from "@store/lib/constants/routes";
@@ -9,13 +8,8 @@ import type { List } from "@store/lib/types/common";
 import type { Product } from "@store/lib/types/product";
 import type { Route } from "./+types/admin.categories._index";
 
-export const loader = ProtectedAdminRoute(async ({ request }) => {
-  const response = await listProducts(request);
-  return response;
-});
-
-export const action = ProtectedAdminRoute(async ({ request }) => {
-  const response = await createCategory(request);
+export const loader = ProtectedAdminRoute(async ({ request, ...args }) => {
+  const response = await listProducts({ ...args, request });
   return response;
 });
 

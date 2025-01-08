@@ -16,12 +16,16 @@ export async function getProduct({
   return parsedResponse.data;
 }
 
-export async function listProducts(
-  request: LoaderFunctionArgs["request"]
-): Promise<List<Product>> {
-  const response = await fetch(`${process.env.APP_BACKEND}/products`, {
-    headers: request.headers,
-  });
+export async function listProducts({
+  query,
+  request,
+}: LoaderFunctionArgs & { query?: URLSearchParams }): Promise<List<Product>> {
+  const response = await fetch(
+    `${process.env.APP_BACKEND}/products?${query?.toString()}`,
+    {
+      headers: request.headers,
+    }
+  );
   const parsedResponse = await response.json();
 
   return parsedResponse.data;

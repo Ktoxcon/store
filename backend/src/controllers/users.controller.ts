@@ -62,7 +62,6 @@ export class UsersController {
 
       response.send({ success: true });
     } catch (error) {
-      console.log(error);
       if (error instanceof Error) {
         const errorDetails =
           error instanceof ZodError ? error.flatten() : error.message;

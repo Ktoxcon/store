@@ -44,7 +44,6 @@ export async function createUser(request: ActionFunctionArgs["request"]) {
   });
 
   const data = await response.json();
-  console.log(data);
   return data;
 }
 

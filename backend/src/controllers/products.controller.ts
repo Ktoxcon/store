@@ -118,7 +118,7 @@ export class ProductsController {
   static async listProducts(request: Request, response: Response) {
     try {
       const { limit, offset, ...filters } = ListProductsRequestBodySchema.parse(
-        request.body
+        request.query
       );
 
       const { count, rows } = await Product.findAndCountAll({

@@ -1,11 +1,15 @@
 import { z } from "zod";
+import { PaginationRequestBody } from "./pagination.schemas";
 
 export const CreateUserRequestBodySchema = z.object({
+  email: z.string().email(),
   name: z.string().nonempty(),
+  userRole: z.string().nonempty(),
+  lastName: z.string().nonempty(),
 });
 
-export const ListUsersRequestBodySchema = z.object({
-  filters: z.object({}),
-  limit: z.number().nonnegative().default(10),
-  offset: z.number().nonnegative().default(1),
-});
+export const EditUserSchema = CreateUserRequestBodySchema.partial();
+
+export const ListUsersRequestBodySchema = PaginationRequestBody.merge(
+  EditUserSchema.partial()
+);

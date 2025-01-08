@@ -1,4 +1,5 @@
 import { UserRoles } from "@store/lib/constants/roles";
+import { UserStatus } from "@store/lib/constants/user-status";
 import { db } from "@store/lib/db";
 import { DataTypes, Model } from "sequelize";
 
@@ -11,6 +12,7 @@ export class User extends Model {
   declare password: string;
   declare picture?: string;
   declare phone?: string;
+  declare stauts: string;
 }
 
 User.init(
@@ -30,11 +32,10 @@ User.init(
     },
     email: {
       allowNull: false,
-
       type: DataTypes.STRING,
     },
     password: {
-      allowNull: false,
+      allowNull: true,
       type: DataTypes.STRING,
     },
     picture: {
@@ -47,6 +48,10 @@ User.init(
       type: DataTypes.ENUM,
       values: Object.values(UserRoles),
       defaultValue: UserRoles.CUSTOMER,
+    },
+    status: {
+      type: DataTypes.ENUM,
+      values: Object.values(UserStatus),
     },
   },
   {

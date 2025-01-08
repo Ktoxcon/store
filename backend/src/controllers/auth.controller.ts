@@ -1,5 +1,6 @@
 import AppConfig from "@store/config/app.config";
 import { DayInMilliseconds } from "@store/lib/constants/time";
+import { UserStatus } from "@store/lib/constants/user-status";
 import { sendPasswordSetUpEmail } from "@store/lib/emails";
 import { encodeData } from "@store/lib/encode";
 import {
@@ -36,6 +37,7 @@ export class AuthController {
         ...restUserProps,
         email,
         password: passwordHash,
+        status: UserStatus.ACTIVE,
       });
 
       response.send({ success: true });
@@ -53,7 +55,9 @@ export class AuthController {
     try {
       const { email, password } = SignInRequestBodySchema.parse(request.body);
 
-      const user = await User.findOne({ where: { email } });
+      const user = await User.findOne({
+        where: { email, status: UserStatus.ACTIVE },
+      });
 
       if (!user) {
         response.status(404).send({
@@ -176,7 +180,10 @@ export class AuthController {
 
       const passwordHash = await hash(password);
 
-      await User.update({ password: passwordHash }, { where: { id } });
+      await User.update(
+        { password: passwordHash, status: UserStatus.ACTIVE },
+        { where: { id } }
+      );
 
       response.send({ success: true });
     } catch (error: unknown) {

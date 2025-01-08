@@ -1,6 +1,6 @@
 import { Grid, type GridProps } from "@radix-ui/themes";
 import type { Address } from "@store/lib/types/address";
-import { AddressListItem } from "./addresses-list-item";
+import { AddressCard } from "./addresses-card";
 
 export type AddressesListProps = {
   addresses: Address[];
@@ -15,7 +15,7 @@ export function AddressessList({
   return (
     <Grid {...restProps} gap="2" columns={{ initial: "1", lg: "3" }}>
       {addresses.map((address) => (
-        <AddressListItem address={address} />
+        <AddressCard address={address} />
       ))}
     </Grid>
   );

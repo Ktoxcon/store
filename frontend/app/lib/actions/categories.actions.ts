@@ -23,8 +23,8 @@ export async function listCategories(
   const response = await fetch(`${process.env.APP_BACKEND}/categories`, {
     headers: request.headers,
   });
-  const parsedResponse = await response.json();
 
+  const parsedResponse = await response.json();
   return parsedResponse.data;
 }
 

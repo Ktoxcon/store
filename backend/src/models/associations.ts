@@ -10,6 +10,7 @@ export function createModelAssociations() {
   User.hasMany(Address, { foreignKey: "userId" });
 
   Order.belongsTo(User, { foreignKey: "userId" });
+  Order.belongsTo(Address, { foreignKey: "addressId" });
   Order.hasMany(OrderItem, { foreignKey: "orderId" });
 
   Address.belongsTo(User, { foreignKey: "userId" });

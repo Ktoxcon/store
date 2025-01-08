@@ -1,5 +1,6 @@
 import { Button, Container, Flex, Heading, Section } from "@radix-ui/themes";
 import { StoreFooter } from "@store/components/common/store-footer";
+import { CustomerNavBar } from "@store/components/customer/customer-nav";
 import { ProductCard } from "@store/components/products/product-card";
 import { AppLink } from "@store/components/ui/app-link";
 import { Carousel } from "@store/components/ui/carousel";
@@ -9,7 +10,7 @@ import routes from "@store/lib/constants/routes";
 import type { List } from "@store/lib/types/common";
 import type { Product } from "@store/lib/types/product";
 import { groupBy } from "@store/lib/utils/group-by";
-import type { Route } from "./+types/app._index";
+import type { Route } from "./+types/app_._index";
 
 export const loader = ProtectedCustomerRoute(async ({ request }) => {
   const response = await listProducts(request);
@@ -27,6 +28,7 @@ export default function CustomerHome({ loaderData }: Route.ComponentProps) {
 
   return (
     <>
+      <CustomerNavBar />
       <Section py="0" position="relative">
         <img
           alt="Multiple store products"

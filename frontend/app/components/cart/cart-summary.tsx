@@ -1,26 +1,21 @@
-import { Flex } from "@radix-ui/themes";
-import routes from "@store/lib/constants/routes";
-import { useShoppingCart } from "@store/lib/hooks/use-shopping-cart";
-import { useEffect } from "react";
-import { useNavigate } from "react-router";
-import { CartItem } from "./cart-item";
+import { Flex, type FlexProps } from "@radix-ui/themes";
+import type { CartItem } from "@store/lib/types/order-item";
+import { CartItemCard } from "./cart-item";
 
-export function CartSummary() {
-  const cart = useShoppingCart();
-  const navigate = useNavigate();
+export type CartSummaryProps = {
+  products: CartItem[];
+  actions?: boolean;
+} & FlexProps;
 
-  const products = Object.values(cart.items);
-
-  useEffect(() => {
-    if (products.length) return;
-
-    navigate(routes.customer.home);
-  }, [cart.items]);
-
+export function CartSummary({
+  products,
+  actions = true,
+  ...restProps
+}: CartSummaryProps) {
   return (
-    <Flex direction="column" gap="1">
+    <Flex {...restProps} direction="column" gap="1">
       {products.map((item) => (
-        <CartItem width={{ lg: "50%" }} key={item.productId} item={item} />
+        <CartItemCard actions={actions} key={item.productId} item={item} />
       ))}
     </Flex>
   );

@@ -1,14 +1,13 @@
 import { DeliveryStatus } from "@store/lib/constants/delivery-status";
+import { OrderStatus } from "@store/lib/constants/order-status";
 import { db } from "@store/lib/db";
+import { RestoreProductStock } from "@store/lib/db/hooks/order.hooks";
 import { DataTypes, Model } from "sequelize";
 
 export class Order extends Model {
   declare id: number;
   declare total: number;
-  declare confirmed: boolean;
-  declare cancelled: boolean;
-  declare confirmedAt: Date;
-  declare cancelledAt: Date;
+  declare status: string;
   declare deliveryStatus: string;
 }
 
@@ -27,26 +26,16 @@ Order.init(
       values: Object.values(DeliveryStatus),
       defaultValue: DeliveryStatus.PENDING,
     },
-    confirmed: {
-      allowNull: false,
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
-    cancelled: {
-      allowNull: false,
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
-    confirmedAt: {
-      type: DataTypes.DATE,
-    },
-    cancelledAt: {
-      type: DataTypes.DATE,
+    status: {
+      type: DataTypes.ENUM,
+      values: Object.values(OrderStatus),
+      defaultValue: DeliveryStatus.PENDING,
     },
   },
   {
     sequelize: db,
     paranoid: true,
     tableName: "Orders",
+    hooks: { afterUpdate: RestoreProductStock },
   }
 );

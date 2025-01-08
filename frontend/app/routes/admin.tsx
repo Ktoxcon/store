@@ -1,4 +1,4 @@
-import { Container, Flex, Heading, Section, Text } from "@radix-ui/themes";
+import { Container, Flex, Heading, Text } from "@radix-ui/themes";
 import { AdminNavBar } from "@store/components/admin/admin-nav";
 import { isRouteErrorResponse, Outlet } from "react-router";
 import type { Route } from "./+types/admin";
@@ -7,11 +7,11 @@ export default function AdminLayout() {
   return (
     <>
       <AdminNavBar />
-      <Section>
-        <Container px={{ initial: "2", lg: "0" }}>
+      <Flex asChild direction="column" height="100dvh">
+        <Container py="8" px={{ initial: "2", lg: "0" }}>
           <Outlet />
         </Container>
-      </Section>
+      </Flex>
     </>
   );
 }

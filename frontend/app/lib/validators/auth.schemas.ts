@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { PasswordConfirmationRefinement } from "../refinements/password";
+import { PasswordConfirmationRefinement } from "./refinements/password";
 
 export const PasswordSchema = z
   .string()

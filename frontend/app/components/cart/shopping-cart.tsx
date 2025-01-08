@@ -4,7 +4,7 @@ import { useShoppingCart } from "@store/lib/hooks/use-shopping-cart";
 import { ShoppingCartIcon } from "../icons/cart";
 import { AppLink } from "../ui/app-link";
 import { CartBadge } from "./cart-badge";
-import { CartItem } from "./cart-item";
+import { CartSummary } from "./cart-summary";
 import { ClearShoppingCart } from "./clear-cart";
 
 export function ShoppingCart() {
@@ -22,17 +22,13 @@ export function ShoppingCart() {
       <Popover.Content asChild>
         <Flex direction="column" width={{ initial: "300px", lg: "360px" }}>
           {products.length > 0 ? (
-            <Flex
-              gap="1"
+            <CartSummary
               height="180px"
               overflowY="scroll"
               direction="column"
+              products={products}
               style={{ scrollbarWidth: "thin" }}
-            >
-              {products.map((item) => (
-                <CartItem item={item} key={item.productId} />
-              ))}
-            </Flex>
+            />
           ) : (
             <Container>Your cart is empty</Container>
           )}

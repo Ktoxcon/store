@@ -1,4 +1,4 @@
-import { Flex, Heading, Text } from "@radix-ui/themes";
+import { Container, Flex, Heading, Text } from "@radix-ui/themes";
 import { StoreFooter } from "@store/components/common/store-footer";
 import { CustomerNavBar } from "@store/components/customer/customer-nav";
 import { isRouteErrorResponse, Outlet } from "react-router";
@@ -8,7 +8,11 @@ export default function AppLayout() {
   return (
     <>
       <CustomerNavBar />
-      <Outlet />
+      <Flex asChild direction="column" height="100dvh">
+        <Container py="8" px={{ initial: "2", lg: "0" }}>
+          <Outlet />
+        </Container>
+      </Flex>
     </>
   );
 }

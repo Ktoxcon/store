@@ -13,9 +13,16 @@ import {
 import { useShoppingCart } from "@store/lib/hooks/use-shopping-cart";
 import type { CartItem } from "@store/lib/types/order-item";
 
-export type CartItemProps = { item: CartItem; size?: "sm" | "lg" } & BoxProps;
+export type CartItemCardProps = {
+  item: CartItem;
+  actions?: boolean;
+} & BoxProps;
 
-export function CartItem({ item, size = "lg", ...restProps }: CartItemProps) {
+export function CartItemCard({
+  item,
+  actions = true,
+  ...restProps
+}: CartItemCardProps) {
   const { addItem, removeItem, decreaseItemQuantity } = useShoppingCart();
 
   return (
@@ -43,24 +50,28 @@ export function CartItem({ item, size = "lg", ...restProps }: CartItemProps) {
             <Text>
               <Strong>x{item.quantity}</Strong>
             </Text>
-            <Flex gap="2">
-              <IconButton
-                size="1"
-                onClick={() => decreaseItemQuantity(item.productId)}
-              >
-                <MinusIcon />
-              </IconButton>
-              <IconButton size="1" onClick={() => addItem(item)}>
-                <PlusIcon />
-              </IconButton>
-            </Flex>
+            {actions && (
+              <Flex gap="2">
+                <IconButton
+                  size="1"
+                  onClick={() => decreaseItemQuantity(item.productId)}
+                >
+                  <MinusIcon />
+                </IconButton>
+                <IconButton size="1" onClick={() => addItem(item)}>
+                  <PlusIcon />
+                </IconButton>
+              </Flex>
+            )}
           </Flex>
 
-          <Flex justify="center">
-            <IconButton size="1" onClick={() => removeItem(item.productId)}>
-              <Cross1Icon />
-            </IconButton>
-          </Flex>
+          {actions && (
+            <Flex justify="center">
+              <IconButton size="1" onClick={() => removeItem(item.productId)}>
+                <Cross1Icon />
+              </IconButton>
+            </Flex>
+          )}
         </Grid>
       </Card>
     </Box>

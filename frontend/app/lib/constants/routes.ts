@@ -14,8 +14,8 @@ export default {
     checkout: "/app/checkout",
     addresses: "/app/addresses",
     newAddress: "/app/addresses/new",
-    order: (id: string) => `/app/order/${id}`,
-    address: (id: string) => `/app/addresses/${id}`,
+    order: (id: string | number) => `/app/orders/${id}`,
+    address: (id: string | number) => `/app/addresses/${id}`,
   },
   admin: {
     home: "/admin",
@@ -25,8 +25,8 @@ export default {
     products: "/admin/products",
     categories: "/admin/categories",
     newProduct: "/admin/products/new",
-    order: (id: string) => `/admin/orders/${id}`,
-    product: (id: string) => `/admin/products/${id}`,
-    category: (id: string) => `/admin/categories/${id}`,
+    order: (id: string | number) => `/admin/orders/${id}`,
+    product: (id: string | number) => `/admin/products/${id}`,
+    category: (id: string | number) => `/admin/categories/${id}`,
   },
 };

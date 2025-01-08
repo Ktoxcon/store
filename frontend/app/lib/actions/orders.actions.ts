@@ -1,5 +1,21 @@
-import type { ActionFunctionArgs } from "react-router";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
+import { profileCookie } from "../auth/session-cookie";
 import { fromFormDataToObject } from "../http/form-data";
+import type { Order } from "../types/orders";
+
+export async function getOrder({
+  params,
+  request,
+}: LoaderFunctionArgs): Promise<Order> {
+  const response = await fetch(
+    `${process.env.APP_BACKEND}/orders/${params.id}`,
+    {
+      headers: request.headers,
+    }
+  );
+  const parsedResponse = await response.json();
+  return parsedResponse.data;
+}
 
 export async function createOrder(request: ActionFunctionArgs["request"]) {
   const formData = await request.formData();
@@ -14,4 +30,52 @@ export async function createOrder(request: ActionFunctionArgs["request"]) {
 
   const data = await response.json();
   return data;
+}
+
+export async function updateOrder({ request, params }: ActionFunctionArgs) {
+  const formData = await request.formData();
+  const entries = fromFormDataToObject(formData);
+  const body = new URLSearchParams(entries);
+
+  const response = await fetch(
+    `${process.env.APP_BACKEND}/orders/${params.id}`,
+    {
+      body,
+      method: "PATCH",
+      headers: request.headers,
+    }
+  );
+
+  const data = await response.json();
+  return data;
+}
+
+export async function listOrders(request: LoaderFunctionArgs["request"]) {
+  const response = await fetch(`${process.env.APP_BACKEND}/orders`, {
+    headers: request.headers,
+  });
+
+  const parsedResponse = await response.json();
+  return parsedResponse.data;
+}
+
+export async function listCustomerOrders(
+  request: LoaderFunctionArgs["request"]
+) {
+  const headers = request.headers;
+  const profile = await profileCookie.getSession(headers.get("Cookie"));
+
+  const query = new URLSearchParams({
+    userId: profile.data.id,
+  });
+
+  const response = await fetch(
+    `${process.env.APP_BACKEND}/orders?${query.toString()}`,
+    {
+      headers: request.headers,
+    }
+  );
+
+  const parsedResponse = await response.json();
+  return parsedResponse.data;
 }

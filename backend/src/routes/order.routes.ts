@@ -10,6 +10,7 @@ OrderRoutes.use(UrlEncodedMiddleware);
 
 OrderRoutes.get("/", AuthMiddleware, OrdersController.listOrders);
 OrderRoutes.get("/:id", AuthMiddleware, OrdersController.getOrder);
+OrderRoutes.patch("/:id", AuthMiddleware, OrdersController.updateOrder);
 OrderRoutes.post(
   "/",
   AuthMiddleware,

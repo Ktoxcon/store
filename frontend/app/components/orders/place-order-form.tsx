@@ -21,42 +21,39 @@ export function PlaceOrderForm({ addresses }: PlaceOrderFormProps) {
   });
 
   return (
-    <Section>
-      <Form method="POST">
-        <input id="user" name="userId" type="hidden" value={user?.id} />
-        <input type="hidden" name="items" value={JSON.stringify(cart.items)} />
-        <Flex
-          gap="2"
-          align={{ initial: "start", lg: "center" }}
-          direction={{ initial: "column", lg: "row" }}
-        >
-          <Box flexGrow="1">
-            <Heading as="h1" size={{ initial: "7", lg: "8" }}>
-              Review Your Order
-            </Heading>
-          </Box>
-          <Box width={{ initial: "100%", lg: "unset" }}>
-            <Button
-              style={{ width: "100%" }}
-              loading={navigation.state === "submitting"}
-              disabled={!formState.isDirty || !formState.isValid}
-            >
-              Place Order
-            </Button>
-          </Box>
-        </Flex>
-
-        <Section>
-          <Heading>Select an address</Heading>
-          <Box maxWidth={{ initial: "100%", lg: "50%" }}>
-            <AddressessSelector
-              control={control}
-              addresses={addresses}
-              {...register("addressId")}
-            />
-          </Box>
-        </Section>
-      </Form>
-    </Section>
+    <Form method="POST">
+      <input id="user" name="userId" type="hidden" value={user?.id} />
+      <input type="hidden" name="items" value={JSON.stringify(cart.items)} />
+      <Flex
+        gap="2"
+        align={{ initial: "start", lg: "center" }}
+        direction={{ initial: "column", lg: "row" }}
+      >
+        <Box flexGrow="1">
+          <Heading as="h1" size={{ initial: "7", lg: "8" }}>
+            Review Your Order
+          </Heading>
+        </Box>
+        <Box width={{ initial: "100%", lg: "unset" }}>
+          <Button
+            style={{ width: "100%" }}
+            loading={navigation.state === "submitting"}
+            disabled={!formState.isDirty || !formState.isValid}
+          >
+            Place Order
+          </Button>
+        </Box>
+      </Flex>
+      <Section pb="0">
+        <Heading>Select an address</Heading>
+        <Box maxWidth={{ initial: "100%", lg: "50%" }}>
+          <AddressessSelector
+            control={control}
+            addresses={addresses}
+            {...register("addressId")}
+          />
+        </Box>
+      </Section>
+    </Form>
   );
 }

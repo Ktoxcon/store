@@ -8,6 +8,7 @@ import {
 import { Address } from "@store/models/address.model";
 import { OrderItem } from "@store/models/order-item.model";
 import { Order } from "@store/models/order.model";
+import { Product } from "@store/models/product.model";
 import { User } from "@store/models/user.model";
 import type { Request, Response } from "express";
 import { ZodError } from "zod";
@@ -17,7 +18,12 @@ export class OrdersController {
     try {
       const id = IdParamSchema.parse(request.params.id);
 
-      const order = await Order.findByPk(id);
+      const order = await Order.findByPk(id, {
+        include: [
+          { model: Address },
+          { model: OrderItem, include: [{ model: Product }] },
+        ],
+      });
 
       if (!order) {
         response
@@ -104,6 +110,7 @@ export class OrdersController {
     const transaction = await db.transaction();
     try {
       const id = IdParamSchema.parse(request.params.id);
+
       const { addressId, ...restUploadPayload } =
         UpdateOrderRequestBodySchema.parse(request.body);
 
@@ -131,7 +138,7 @@ export class OrdersController {
 
       await Order.update(
         { addressId, ...restUploadPayload },
-        { where: { id }, transaction }
+        { where: { id }, transaction, individualHooks: true }
       );
 
       await transaction.commit();

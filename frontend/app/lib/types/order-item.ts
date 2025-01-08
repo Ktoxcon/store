@@ -1,3 +1,5 @@
+import type { Product } from "./product";
+
 export type CartItem = {
   name: string;
   price: number;
@@ -6,4 +8,4 @@ export type CartItem = {
   productId: string;
 };
 
-export type OrderItem = { orderId: string } & CartItem;
+export type OrderItem = { orderId: string; Product: Product } & CartItem;

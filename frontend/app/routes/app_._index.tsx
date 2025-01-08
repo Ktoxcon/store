@@ -13,7 +13,8 @@ import { groupBy } from "@store/lib/utils/group-by";
 import type { Route } from "./+types/app_._index";
 
 export const loader = ProtectedCustomerRoute(async ({ request, ...args }) => {
-  const response = await listProducts({ ...args, request });
+  const query = new URLSearchParams({ active: "true" });
+  const response = await listProducts({ ...args, request, query });
   return response;
 });
 

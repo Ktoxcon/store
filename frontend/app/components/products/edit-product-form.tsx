@@ -8,6 +8,7 @@ import { EditProductFormSchema } from "@store/lib/validators/product.schemas";
 import { useForm } from "react-hook-form";
 import { Form, useNavigation, useRouteLoaderData } from "react-router";
 import { CategoriesSelector } from "../categories/categories-selector";
+import { StatusSelector } from "../common/status-selector";
 import { AppLink } from "../ui/app-link";
 
 export type EditProductFormProps = { product: Product };
@@ -42,6 +43,18 @@ export function EditProductForm({ product }: EditProductFormProps) {
             {...register("categoryId")}
           />
         </Box>
+        <Flex direction="column">
+          <label htmlFor="name">
+            <Text as="div" size="2" mb="1" weight="bold">
+              Product Status
+            </Text>
+          </label>
+          <StatusSelector
+            control={control}
+            defaultValue={String(product.active)}
+            {...register("active")}
+          />
+        </Flex>
         <Box>
           <label htmlFor="name">
             <Text as="div" size="2" mb="1" weight="bold">

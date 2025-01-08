@@ -16,10 +16,5 @@ export const EditAddressRequestBodySchema =
   CreateAddressRequestBodySchema.partial();
 
 export const ListAddressesRequestBodySchema = PaginationRequestBody.merge(
-  EditAddressRequestBodySchema.pick({
-    name: true,
-    phone: true,
-    township: true,
-    department: true,
-  })
+  EditAddressRequestBodySchema
 );

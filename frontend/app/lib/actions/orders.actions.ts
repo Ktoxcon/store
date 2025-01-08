@@ -50,27 +50,12 @@ export async function updateOrder({ request, params }: ActionFunctionArgs) {
   return data;
 }
 
-export async function listOrders(request: LoaderFunctionArgs["request"]) {
-  const response = await fetch(`${process.env.APP_BACKEND}/orders`, {
-    headers: request.headers,
-  });
-
-  const parsedResponse = await response.json();
-  return parsedResponse.data;
-}
-
-export async function listCustomerOrders(
-  request: LoaderFunctionArgs["request"]
-) {
-  const headers = request.headers;
-  const profile = await profileCookie.getSession(headers.get("Cookie"));
-
-  const query = new URLSearchParams({
-    userId: profile.data.id,
-  });
-
+export async function listOrders({
+  query,
+  request,
+}: LoaderFunctionArgs & { query?: URLSearchParams }) {
   const response = await fetch(
-    `${process.env.APP_BACKEND}/orders?${query.toString()}`,
+    `${process.env.APP_BACKEND}/orders?${query?.toString()}`,
     {
       headers: request.headers,
     }
@@ -78,4 +63,19 @@ export async function listCustomerOrders(
 
   const parsedResponse = await response.json();
   return parsedResponse.data;
+}
+
+export async function listCustomerOrders({
+  request,
+  ...args
+}: LoaderFunctionArgs) {
+  const headers = request.headers;
+  const profile = await profileCookie.getSession(headers.get("Cookie"));
+
+  const query = new URLSearchParams({
+    userId: profile.data.id,
+  });
+
+  const response = await listOrders({ ...args, query, request });
+  return response;
 }

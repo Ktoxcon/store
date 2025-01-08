@@ -6,8 +6,8 @@ import type { List } from "@store/lib/types/common";
 import type { Order } from "@store/lib/types/orders";
 import type { Route } from "./+types/app.addresses._index";
 
-export const loader = ProtectedCustomerRoute(async ({ request }) => {
-  const response = await listCustomerOrders(request);
+export const loader = ProtectedCustomerRoute(async ({ request, ...args }) => {
+  const response = await listCustomerOrders({ ...args, request });
   return response;
 });
 

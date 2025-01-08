@@ -3,13 +3,21 @@ import { AddressessList } from "@store/components/addresses/addresses-list";
 import { AppLink } from "@store/components/ui/app-link";
 import { listAddresses } from "@store/lib/actions/addresses.actions";
 import { ProtectedCustomerRoute } from "@store/lib/auth/decorators";
+import { profileCookie } from "@store/lib/auth/session-cookie";
 import routes from "@store/lib/constants/routes";
 import type { Address } from "@store/lib/types/address";
 import type { List } from "@store/lib/types/common";
 import type { Route } from "./+types/app.addresses._index";
 
-export const loader = ProtectedCustomerRoute(async ({ request }) => {
-  const response = await listAddresses(request);
+export const loader = ProtectedCustomerRoute(async ({ request, ...args }) => {
+  const headers = request.headers;
+  const profile = await profileCookie.getSession(headers.get("Cookie"));
+
+  const query = new URLSearchParams({
+    userId: profile.data.id,
+  });
+
+  const response = await listAddresses({ ...args, request, query });
   return response;
 });
 

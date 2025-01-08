@@ -160,7 +160,7 @@ export class OrdersController {
     const transaction = await db.transaction();
     try {
       const { limit, offset, ...params } = ListOrdersRequestBodySchema.parse(
-        request.body
+        request.query
       );
 
       const { count, rows } = await Order.findAndCountAll({

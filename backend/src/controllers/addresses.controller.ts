@@ -104,7 +104,7 @@ export class AddressesController {
   static async listAddresses(request: Request, response: Response) {
     try {
       const { limit, offset, ...filters } =
-        ListAddressesRequestBodySchema.parse(request.body);
+        ListAddressesRequestBodySchema.parse(request.query);
 
       const { count, rows } = await Address.findAndCountAll({
         where: {

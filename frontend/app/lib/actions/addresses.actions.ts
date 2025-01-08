@@ -18,12 +18,16 @@ export async function getAddress({
   return parsedResponse.data;
 }
 
-export async function listAddresses(
-  request: LoaderFunctionArgs["request"]
-): Promise<List<Address>> {
-  const response = await fetch(`${process.env.APP_BACKEND}/addresses`, {
-    headers: request.headers,
-  });
+export async function listAddresses({
+  query,
+  request,
+}: LoaderFunctionArgs & { query?: URLSearchParams }): Promise<List<Address>> {
+  const response = await fetch(
+    `${process.env.APP_BACKEND}/addresses?${query?.toString()}`,
+    {
+      headers: request.headers,
+    }
+  );
 
   const parsedResponse = await response.json();
   return parsedResponse.data;

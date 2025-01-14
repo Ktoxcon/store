@@ -1,5 +1,6 @@
 import { ShoppingCartProvider } from "./shoopping-cart.provider";
 import { AppThemeProvider } from "./theme.provider";
+import { ToastProvider } from "./toast.provider";
 
 export function Providers({
   children,
@@ -8,7 +9,9 @@ export function Providers({
 }>) {
   return (
     <AppThemeProvider>
-      <ShoppingCartProvider>{children}</ShoppingCartProvider>
+      <ToastProvider>
+        <ShoppingCartProvider>{children}</ShoppingCartProvider>
+      </ToastProvider>
     </AppThemeProvider>
   );
 }

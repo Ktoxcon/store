@@ -6,6 +6,7 @@ import { createOrder } from "@store/lib/actions/orders.actions";
 import { ProtectedCustomerRoute } from "@store/lib/auth/decorators";
 import routes from "@store/lib/constants/routes";
 import { useShoppingCart } from "@store/lib/hooks/use-shopping-cart";
+import { useToast } from "@store/lib/hooks/use-toast";
 import type { ActionResult } from "@store/lib/types/actions";
 import type { Address } from "@store/lib/types/address";
 import type { List } from "@store/lib/types/common";
@@ -30,14 +31,20 @@ export default function Checkout({
   const data = actionData as ActionResult;
   const { items } = loaderData as List<Address>;
 
+  const toast = useToast();
   const navigate = useNavigate();
   const cart = useShoppingCart();
+
   const products = Object.values(cart.items);
 
   useEffect(() => {
     if (data?.success) {
       cart.clear();
       navigate(routes.customer.orders);
+    }
+
+    if (!data?.success && data?.error) {
+      toast.show({ title: "Checkout Error", description: data?.error });
     }
   }, [data]);
 

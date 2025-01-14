@@ -14,6 +14,7 @@ export function CustomerOrdersList({ orders }: OrdersListProps) {
           orders.map((order) => {
             return (
               <OrdersListItem
+                key={order.id}
                 order={order}
                 route={routes.customer.order(order.id)}
               >

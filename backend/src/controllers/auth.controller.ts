@@ -15,8 +15,8 @@ import type { Request, Response } from "express";
 import { type JwtPayload, sign, verify as verifyToken } from "jsonwebtoken";
 import { ZodError } from "zod";
 
-export class AuthController {
-  static async signUp(request: Request, response: Response) {
+export const AuthController = {
+  async signUp(request: Request, response: Response) {
     try {
       const { email, password, ...restUserProps } =
         SignUpRequestBodySchema.parse(request.body);
@@ -49,9 +49,9 @@ export class AuthController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async signIn(request: Request, response: Response) {
+  async signIn(request: Request, response: Response) {
     try {
       const { email, password } = SignInRequestBodySchema.parse(request.body);
 
@@ -110,9 +110,9 @@ export class AuthController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async signOut(_request: Request, response: Response) {
+  async signOut(_request: Request, response: Response) {
     try {
       response.clearCookie("session");
       response.clearCookie("profile");
@@ -123,9 +123,9 @@ export class AuthController {
         response.status(500).send({ success: false, error: error.message });
       }
     }
-  }
+  },
 
-  static async recoverAccount(request: Request, response: Response) {
+  async recoverAccount(request: Request, response: Response) {
     try {
       const { email } = SendRecoveryLinkRequestBodySchema.parse(request.body);
 
@@ -154,9 +154,9 @@ export class AuthController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async resetPassword(request: Request, response: Response) {
+  async resetPassword(request: Request, response: Response) {
     try {
       const { password, token } = ResetPasswordRequestBodySchema.parse(
         request.body
@@ -194,5 +194,5 @@ export class AuthController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
-}
+  },
+};

@@ -10,8 +10,8 @@ import { User } from "@store/models/user.model";
 import type { Request, Response } from "express";
 import { ZodError } from "zod";
 
-export class UsersController {
-  static async getUser(request: Request, response: Response) {
+export const UsersController = {
+  async getUser(request: Request, response: Response) {
     try {
       const id = IdParamSchema.parse(request.params.id);
 
@@ -31,9 +31,9 @@ export class UsersController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async createUser(request: Request, response: Response) {
+  async createUser(request: Request, response: Response) {
     try {
       const { email, ...restAddressProps } = CreateUserRequestBodySchema.parse(
         request.body
@@ -70,9 +70,9 @@ export class UsersController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async updateUser(request: Request, response: Response) {
+  async updateUser(request: Request, response: Response) {
     try {
       const id = IdParamSchema.parse(request.params.id);
       const userUpdatePayload = EditUserSchema.parse(request.body);
@@ -97,9 +97,9 @@ export class UsersController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async listUsers(request: Request, response: Response) {
+  async listUsers(request: Request, response: Response) {
     try {
       const { limit, offset, ...filters } = ListUsersRequestBodySchema.parse(
         request.query
@@ -122,5 +122,5 @@ export class UsersController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
-}
+  },
+};

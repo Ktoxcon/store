@@ -8,8 +8,8 @@ import { ProductCategory } from "@store/models/product-category.model";
 import type { Request, Response } from "express";
 import { ZodError } from "zod";
 
-export class ProductCategoriesController {
-  static async getCategory(request: Request, response: Response) {
+export const ProductCategoriesController = {
+  async getCategory(request: Request, response: Response) {
     try {
       const id = IdParamSchema.parse(request.params.id);
 
@@ -31,9 +31,9 @@ export class ProductCategoriesController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async createCategory(request: Request, response: Response) {
+  async createCategory(request: Request, response: Response) {
     try {
       const { name } = CreateCategoryRequestBodySchema.parse(request.body);
 
@@ -59,9 +59,9 @@ export class ProductCategoriesController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async updateCategory(request: Request, response: Response) {
+  async updateCategory(request: Request, response: Response) {
     try {
       const id = IdParamSchema.parse(request.params.id);
       const categoryUpdatePayload = EditCategoryRequestBodySchema.parse(
@@ -91,9 +91,9 @@ export class ProductCategoriesController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async listCategories(request: Request, response: Response) {
+  async listCategories(request: Request, response: Response) {
     try {
       const { limit, offset, ...filters } =
         ListCategoriesRequestBodySchema.parse(request.body);
@@ -115,9 +115,9 @@ export class ProductCategoriesController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async deleteCategory(request: Request, response: Response) {
+  async deleteCategory(request: Request, response: Response) {
     try {
       const id = IdParamSchema.parse(request.params.id);
 
@@ -141,5 +141,5 @@ export class ProductCategoriesController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
-}
+  },
+};

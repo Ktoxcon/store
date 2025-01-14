@@ -9,8 +9,8 @@ import { User } from "@store/models/user.model";
 import type { Request, Response } from "express";
 import { ZodError } from "zod";
 
-export class AddressesController {
-  static async getAddress(request: Request, response: Response) {
+export const AddressesController = {
+  async getAddress(request: Request, response: Response) {
     try {
       const id = IdParamSchema.parse(request.params.id);
 
@@ -32,9 +32,9 @@ export class AddressesController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async createAddress(request: Request, response: Response) {
+  async createAddress(request: Request, response: Response) {
     try {
       const { name, userId, ...restAddressProps } =
         CreateAddressRequestBodySchema.parse(request.body);
@@ -70,9 +70,9 @@ export class AddressesController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async updateAddress(request: Request, response: Response) {
+  async updateAddress(request: Request, response: Response) {
     try {
       const id = IdParamSchema.parse(request.params.id);
       const addressUpdatePayload = EditAddressRequestBodySchema.parse(
@@ -99,9 +99,9 @@ export class AddressesController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async listAddresses(request: Request, response: Response) {
+  async listAddresses(request: Request, response: Response) {
     try {
       const { limit, offset, ...filters } =
         ListAddressesRequestBodySchema.parse(request.query);
@@ -123,9 +123,9 @@ export class AddressesController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async deleteAddress(request: Request, response: Response) {
+  async deleteAddress(request: Request, response: Response) {
     try {
       const id = IdParamSchema.parse(request.params.id);
 
@@ -149,5 +149,5 @@ export class AddressesController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
-}
+  },
+};

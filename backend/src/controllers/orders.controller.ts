@@ -13,8 +13,8 @@ import { User } from "@store/models/user.model";
 import type { Request, Response } from "express";
 import { ZodError } from "zod";
 
-export class OrdersController {
-  static async getOrder(request: Request, response: Response) {
+export const OrdersController = {
+  async getOrder(request: Request, response: Response) {
     try {
       const id = IdParamSchema.parse(request.params.id);
 
@@ -41,9 +41,9 @@ export class OrdersController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async createOrder(request: Request, response: Response) {
+  async createOrder(request: Request, response: Response) {
     const transaction = await db.transaction();
     try {
       const { userId, addressId, items } = CreateOrderRequestBodySchema.parse(
@@ -104,9 +104,9 @@ export class OrdersController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async updateOrder(request: Request, response: Response) {
+  async updateOrder(request: Request, response: Response) {
     const transaction = await db.transaction();
     try {
       const id = IdParamSchema.parse(request.params.id);
@@ -154,9 +154,9 @@ export class OrdersController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async listOrders(request: Request, response: Response) {
+  async listOrders(request: Request, response: Response) {
     const transaction = await db.transaction();
     try {
       const { limit, offset, ...params } = ListOrdersRequestBodySchema.parse(
@@ -185,5 +185,5 @@ export class OrdersController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
-}
+  },
+};

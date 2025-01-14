@@ -10,8 +10,8 @@ import { Product } from "@store/models/product.model";
 import type { Request, Response } from "express";
 import { ZodError } from "zod";
 
-export class ProductsController {
-  static async getProduct(request: Request, response: Response) {
+export const ProductsController = {
+  async getProduct(request: Request, response: Response) {
     try {
       const id = IdParamSchema.parse(request.params.id);
 
@@ -33,9 +33,9 @@ export class ProductsController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async createProduct(request: Request, response: Response) {
+  async createProduct(request: Request, response: Response) {
     try {
       const { name, categoryId, ...restProductProps } =
         CreateProductRequestBodySchema.parse(request.body);
@@ -76,9 +76,9 @@ export class ProductsController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async updateProduct(request: Request, response: Response) {
+  async updateProduct(request: Request, response: Response) {
     try {
       const id = IdParamSchema.parse(request.params.id);
       const productUpdatePayload = EditProductDataSchema.parse(request.body);
@@ -113,9 +113,9 @@ export class ProductsController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async listProducts(request: Request, response: Response) {
+  async listProducts(request: Request, response: Response) {
     try {
       const { limit, offset, ...filters } = ListProductsRequestBodySchema.parse(
         request.query
@@ -144,9 +144,9 @@ export class ProductsController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
+  },
 
-  static async deleteProduct(request: Request, response: Response) {
+  async deleteProduct(request: Request, response: Response) {
     try {
       const id = IdParamSchema.parse(request.params.id);
 
@@ -170,5 +170,5 @@ export class ProductsController {
         response.status(400).send({ success: false, error: errorDetails });
       }
     }
-  }
-}
+  },
+};

@@ -7,8 +7,8 @@ import type { Order } from "@store/lib/types/orders";
 import type { Route } from "./+types/admin.categories._index";
 
 export const loader = ProtectedAdminRoute(async ({ request, ...args }) => {
-  const response = await listOrders({ ...args, request });
-  return response;
+  const result = await listOrders({ ...args, request });
+  return result;
 });
 
 export default function Orders({ loaderData }: Route.ComponentProps) {

@@ -8,9 +8,9 @@ import type { List } from "@store/lib/types/common";
 import type { User } from "@store/lib/types/user";
 import type { Route } from "./+types/admin.categories._index";
 
-export const loader = ProtectedAdminRoute(async ({ request, ...args }) => {
-  const response = await listUsers({ ...args, request });
-  return response;
+export const loader = ProtectedAdminRoute(async (args) => {
+  const result = await listUsers(args);
+  return result;
 });
 
 export default function Users({ loaderData }: Route.ComponentProps) {

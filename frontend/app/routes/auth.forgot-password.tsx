@@ -37,8 +37,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export async function action({ request }: ActionFunctionArgs) {
-  const response = await recoverAccount(request);
-  return response;
+  const result = await recoverAccount(request);
+  return result;
 }
 
 export default function ForgotPassword({ actionData }: Route.ComponentProps) {

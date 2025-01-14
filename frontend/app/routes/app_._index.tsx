@@ -4,7 +4,7 @@ import { CustomerNavBar } from "@store/components/customer/customer-nav";
 import { ProductCard } from "@store/components/products/product-card";
 import { AppLink } from "@store/components/ui/app-link";
 import { Carousel } from "@store/components/ui/carousel";
-import { listProducts } from "@store/lib/actions/products.actions";
+import { listActiveProducts } from "@store/lib/actions/products.actions";
 import { ProtectedCustomerRoute } from "@store/lib/auth/decorators";
 import routes from "@store/lib/constants/routes";
 import type { List } from "@store/lib/types/common";
@@ -13,9 +13,8 @@ import { groupBy } from "@store/lib/utils/group-by";
 import type { Route } from "./+types/app_._index";
 
 export const loader = ProtectedCustomerRoute(async ({ request, ...args }) => {
-  const query = new URLSearchParams({ active: "true" });
-  const response = await listProducts({ ...args, request, query });
-  return response;
+  const result = await listActiveProducts({ ...args, request });
+  return result;
 });
 
 export default function CustomerHome({ loaderData }: Route.ComponentProps) {

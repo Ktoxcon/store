@@ -11,13 +11,13 @@ import type { List } from "@store/lib/types/common";
 import type { Route } from "./+types/admin.categories._index";
 
 export const loader = ProtectedAdminRoute(async ({ request }) => {
-  const response = await listCategories(request);
-  return response;
+  const result = await listCategories(request);
+  return result;
 });
 
 export const action = ProtectedAdminRoute(async ({ request }) => {
-  const response = await createCategory(request);
-  return response;
+  const result = await createCategory(request);
+  return result;
 });
 
 export default function Categories({ loaderData }: Route.ComponentProps) {

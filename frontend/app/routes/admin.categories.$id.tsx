@@ -11,9 +11,9 @@ import type { ProductCategory } from "@store/lib/types/category";
 import { redirect } from "react-router";
 import type { Route } from "./+types/admin.categories.$id";
 
-export const loader = ProtectedAdminRoute(async ({ params, request }) => {
-  const response = await getCategory({ params, request });
-  return response;
+export const loader = ProtectedAdminRoute(async (args) => {
+  const result = await getCategory(args);
+  return result;
 });
 
 export const action = ProtectedAdminRoute(async ({ params, request }) => {

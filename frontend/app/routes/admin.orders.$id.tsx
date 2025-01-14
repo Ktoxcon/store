@@ -9,13 +9,13 @@ import type { Order } from "@store/lib/types/orders";
 import { redirect } from "react-router";
 import type { Route } from "./+types/app.orders.$id";
 
-export const loader = ProtectedAdminRoute(async ({ params, request }) => {
-  const response = await getOrder({ params, request });
-  return response;
+export const loader = ProtectedAdminRoute(async (args) => {
+  const result = await getOrder(args);
+  return result;
 });
 
-export const action = ProtectedAdminRoute(async ({ params, request }) => {
-  await updateOrder({ params, request });
+export const action = ProtectedAdminRoute(async (args) => {
+  await updateOrder(args);
   return redirect(routes.admin.orders);
 });
 

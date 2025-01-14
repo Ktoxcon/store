@@ -17,15 +17,18 @@ export async function getProduct({
 }
 
 export async function listProducts({
-  query,
   request,
-}: LoaderFunctionArgs & { query?: URLSearchParams }): Promise<List<Product>> {
+  searchParams,
+}: LoaderFunctionArgs & { searchParams?: URLSearchParams }): Promise<
+  List<Product>
+> {
   const response = await fetch(
-    `${process.env.APP_BACKEND}/products?${query?.toString()}`,
+    `${process.env.APP_BACKEND}/products?${searchParams?.toString()}`,
     {
       headers: request.headers,
     }
   );
+
   const parsedResponse = await response.json();
 
   return parsedResponse.data;
@@ -43,8 +46,8 @@ export async function createProduct(request: ActionFunctionArgs["request"]) {
     method: "POST",
   });
 
-  const data = await response.json();
-  return data;
+  const parsedResponse = await response.json();
+  return parsedResponse;
 }
 
 export async function updateProduct({ params, request }: ActionFunctionArgs) {
@@ -62,8 +65,8 @@ export async function updateProduct({ params, request }: ActionFunctionArgs) {
     }
   );
 
-  const data = await response.json();
-  return data;
+  const parsedResponse = await response.json();
+  return parsedResponse;
 }
 
 export async function deleteProduct({ params, request }: LoaderFunctionArgs) {
@@ -75,6 +78,13 @@ export async function deleteProduct({ params, request }: LoaderFunctionArgs) {
     }
   );
 
-  const data = await response.json();
-  return data;
+  const parsedResponse = await response.json();
+  return parsedResponse;
+}
+
+export async function listActiveProducts(args: LoaderFunctionArgs) {
+  const searchParams = new URLSearchParams({ active: "true" });
+
+  const parsedResponse = await listProducts({ ...args, searchParams });
+  return parsedResponse;
 }

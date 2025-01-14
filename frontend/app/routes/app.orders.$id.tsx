@@ -8,9 +8,9 @@ import type { Order } from "@store/lib/types/orders";
 import { redirect } from "react-router";
 import type { Route } from "./+types/app.orders.$id";
 
-export const loader = ProtectedCustomerRoute(async ({ params, request }) => {
-  const response = await getOrder({ params, request });
-  return response;
+export const loader = ProtectedCustomerRoute(async (args) => {
+  const result = await getOrder(args);
+  return result;
 });
 
 export const action = ProtectedCustomerRoute(async ({ params, request }) => {

@@ -38,8 +38,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export async function action({ request }: ActionFunctionArgs) {
-  const response = await signIn(request);
-  return response;
+  const result = await signIn(request);
+  return result;
 }
 
 export default function SignIn({ actionData }: Route.ComponentProps) {

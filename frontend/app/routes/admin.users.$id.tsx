@@ -4,16 +4,20 @@ import { getUser, updateUser } from "@store/lib/actions/users.actions";
 import { ProtectedAdminRoute } from "@store/lib/auth/decorators";
 import routes from "@store/lib/constants/routes";
 import type { User } from "@store/lib/types/user";
-import { redirect } from "react-router";
+import {
+  redirect,
+  type ActionFunctionArgs,
+  type LoaderFunctionArgs,
+} from "react-router";
 import type { Route } from "./+types/app.addresses.$id";
 
-export const loader = ProtectedAdminRoute(async ({ params, request }) => {
-  const response = await getUser({ params, request });
-  return response;
+export const loader = ProtectedAdminRoute(async (args: LoaderFunctionArgs) => {
+  const result = await getUser(args);
+  return result;
 });
 
-export const action = ProtectedAdminRoute(async ({ params, request }) => {
-  await updateUser({ params, request });
+export const action = ProtectedAdminRoute(async (args: ActionFunctionArgs) => {
+  await updateUser(args);
   return redirect(routes.admin.users);
 });
 

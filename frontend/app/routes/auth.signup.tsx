@@ -39,8 +39,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export async function action({ request }: ActionFunctionArgs) {
-  const response = await signUp(request);
-  return response;
+  const result = await signUp(request);
+  return result;
 }
 
 export default function SignUp({ actionData }: Route.ComponentProps) {

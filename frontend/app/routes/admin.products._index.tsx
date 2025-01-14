@@ -8,9 +8,9 @@ import type { List } from "@store/lib/types/common";
 import type { Product } from "@store/lib/types/product";
 import type { Route } from "./+types/admin.categories._index";
 
-export const loader = ProtectedAdminRoute(async ({ request, ...args }) => {
-  const response = await listProducts({ ...args, request });
-  return response;
+export const loader = ProtectedAdminRoute(async (args) => {
+  const result = await listProducts(args);
+  return result;
 });
 
 export default function Products({ loaderData }: Route.ComponentProps) {

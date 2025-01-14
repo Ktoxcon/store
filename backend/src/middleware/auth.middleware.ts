@@ -13,7 +13,7 @@ export async function AuthMiddleware(
     if (!session) {
       response
         .status(401)
-        .send({ success: false, error: "Unauthorized request." });
+        .send({ success: false, error: "Unauthorized Request" });
       return;
     }
 

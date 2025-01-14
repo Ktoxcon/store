@@ -1,10 +1,9 @@
 import { Heading, Section } from "@radix-ui/themes";
 import { CartSummary } from "@store/components/cart/cart-summary";
 import { PlaceOrderForm } from "@store/components/orders/place-order-form";
-import { listAddresses } from "@store/lib/actions/addresses.actions";
+import { listCustomerAddresses } from "@store/lib/actions/addresses.actions";
 import { createOrder } from "@store/lib/actions/orders.actions";
 import { ProtectedCustomerRoute } from "@store/lib/auth/decorators";
-import { profileCookie } from "@store/lib/auth/session-cookie";
 import routes from "@store/lib/constants/routes";
 import { useShoppingCart } from "@store/lib/hooks/use-shopping-cart";
 import type { ActionResult } from "@store/lib/types/actions";
@@ -14,21 +13,14 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import type { Route } from "./+types/app.checkout._index";
 
-export const loader = ProtectedCustomerRoute(async ({ request, ...args }) => {
-  const headers = request.headers;
-  const profile = await profileCookie.getSession(headers.get("Cookie"));
-
-  const query = new URLSearchParams({
-    userId: profile.data.id,
-  });
-
-  const response = await listAddresses({ ...args, request, query });
-  return response;
+export const loader = ProtectedCustomerRoute(async (args) => {
+  const result = await listCustomerAddresses(args);
+  return result;
 });
 
-export const action = ProtectedCustomerRoute(async ({ request }) => {
-  const response = await createOrder(request);
-  return response;
+export const action = ProtectedCustomerRoute(async (args) => {
+  const result = await createOrder(args);
+  return result;
 });
 
 export default function Checkout({

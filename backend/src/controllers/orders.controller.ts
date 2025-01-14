@@ -1,3 +1,4 @@
+import { OrderStatus } from "@store/lib/constants/order-status";
 import { db } from "@store/lib/db";
 import { IdParamSchema } from "@store/lib/validators/model.schemas";
 import {
@@ -114,7 +115,10 @@ export const OrdersController = {
       const { addressId, ...restUploadPayload } =
         UpdateOrderRequestBodySchema.parse(request.body);
 
-      const order = await Order.findByPk(id, { transaction });
+      const order = await Order.findOne({
+        where: { id, status: OrderStatus.PENDING },
+        transaction,
+      });
 
       if (!order) {
         response

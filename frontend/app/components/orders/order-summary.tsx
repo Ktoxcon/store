@@ -9,18 +9,6 @@ export type OrderSummaryProps = { order: Order };
 export function OrderSummary({ order }: OrderSummaryProps) {
   return (
     <DataList.Root>
-      <DataList.Item align="center">
-        <DataList.Label>Status</DataList.Label>
-        <DataList.Value>
-          <OrderStatusBadge status={order.status} />
-        </DataList.Value>
-      </DataList.Item>
-      <DataList.Item align="center">
-        <DataList.Label>Delivery Status</DataList.Label>
-        <DataList.Value>
-          <Badge>{order.deliveryStatus}</Badge>
-        </DataList.Value>
-      </DataList.Item>
       <DataList.Item>
         <DataList.Label>ID</DataList.Label>
         <DataList.Value>
@@ -35,6 +23,18 @@ export function OrderSummary({ order }: OrderSummaryProps) {
               <CopyIcon />
             </IconButton>
           </Flex>
+        </DataList.Value>
+      </DataList.Item>
+      <DataList.Item align="center">
+        <DataList.Label>Status</DataList.Label>
+        <DataList.Value>
+          <OrderStatusBadge status={order.status} />
+        </DataList.Value>
+      </DataList.Item>
+      <DataList.Item align="center">
+        <DataList.Label>Delivery Status</DataList.Label>
+        <DataList.Value>
+          <Badge>{order.deliveryStatus}</Badge>
         </DataList.Value>
       </DataList.Item>
       <DataList.Item>

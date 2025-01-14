@@ -10,17 +10,15 @@ import {
 } from "react-router";
 import type { Route } from "./+types/root";
 import { NavBar } from "./components/ui/navbar";
-import { profileCookie } from "./lib/auth/session-cookie";
+import { getProfile } from "./lib/actions/profile.actions";
 import { Providers } from "./lib/providers";
 
 import "@radix-ui/themes/styles.css";
 import "./app.css";
 
-export async function loader({ request }: LoaderFunctionArgs) {
-  const headers = request.headers;
-  const profile = await profileCookie.getSession(headers.get("Cookie"));
-
-  return profile.data;
+export async function loader(args: LoaderFunctionArgs) {
+  const profile = await getProfile(args);
+  return profile;
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {

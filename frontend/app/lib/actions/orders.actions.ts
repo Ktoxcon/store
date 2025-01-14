@@ -1,7 +1,8 @@
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
-import { profileCookie } from "../auth/session-cookie";
+import { OrderStatus } from "../constants/order-status";
 import { fromFormDataToObject } from "../http/form-data";
 import type { Order } from "../types/orders";
+import { getProfile } from "./profile.actions";
 
 export async function getOrder({
   params,
@@ -13,11 +14,12 @@ export async function getOrder({
       headers: request.headers,
     }
   );
+
   const parsedResponse = await response.json();
   return parsedResponse.data;
 }
 
-export async function createOrder(request: ActionFunctionArgs["request"]) {
+export async function createOrder({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const entries = fromFormDataToObject(formData);
   const body = new URLSearchParams(entries);
@@ -51,11 +53,11 @@ export async function updateOrder({ request, params }: ActionFunctionArgs) {
 }
 
 export async function listOrders({
-  query,
   request,
-}: LoaderFunctionArgs & { query?: URLSearchParams }) {
+  searchParams,
+}: LoaderFunctionArgs & { searchParams?: URLSearchParams }) {
   const response = await fetch(
-    `${process.env.APP_BACKEND}/orders?${query?.toString()}`,
+    `${process.env.APP_BACKEND}/orders?${searchParams?.toString()}`,
     {
       headers: request.headers,
     }
@@ -69,13 +71,19 @@ export async function listCustomerOrders({
   request,
   ...args
 }: LoaderFunctionArgs) {
-  const headers = request.headers;
-  const profile = await profileCookie.getSession(headers.get("Cookie"));
-
-  const query = new URLSearchParams({
-    userId: profile.data.id,
+  const profile = await getProfile({ request, ...args });
+  const searchParams = new URLSearchParams({
+    userId: profile.id,
   });
 
-  const response = await listOrders({ ...args, query, request });
+  const response = await listOrders({ ...args, request, searchParams });
+
+  return response;
+}
+
+export async function listPendingOrders(args: LoaderFunctionArgs) {
+  const searchParams = new URLSearchParams({ status: OrderStatus.PENDING });
+
+  const response = await listOrders({ ...args, searchParams });
   return response;
 }

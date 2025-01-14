@@ -2,6 +2,7 @@ import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import { fromFormDataToObject } from "../http/form-data";
 import type { Address } from "../types/address";
 import type { List } from "../types/common";
+import { getProfile } from "./profile.actions";
 
 export async function getAddress({
   params,
@@ -18,12 +19,16 @@ export async function getAddress({
   return parsedResponse.data;
 }
 
-export async function listAddresses({
-  query,
+export async function listCustomerAddresses({
   request,
-}: LoaderFunctionArgs & { query?: URLSearchParams }): Promise<List<Address>> {
+  ...args
+}: LoaderFunctionArgs): Promise<List<Address>> {
+  const profile = await getProfile({ request, ...args });
+  const searchParams = new URLSearchParams({
+    userId: profile.id,
+  });
   const response = await fetch(
-    `${process.env.APP_BACKEND}/addresses?${query?.toString()}`,
+    `${process.env.APP_BACKEND}/addresses?${searchParams?.toString()}`,
     {
       headers: request.headers,
     }

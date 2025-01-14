@@ -4,7 +4,7 @@ export function fromOrderItemsToCartItems(orderItems: OrderItem[]) {
   const products = orderItems.map((orderItem) => {
     const { Product } = orderItem;
 
-    return { ...orderItem, ...Product };
+    return { ...Product, ...orderItem };
   });
 
   return products;

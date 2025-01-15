@@ -29,7 +29,7 @@ export default function Product({ loaderData }: Route.ComponentProps) {
   const product = loaderData as Product;
 
   return (
-    <Flex gap="6" direction="column" maxWidth={{ initial: "100%", lg: "50%" }}>
+    <Flex gap="6" direction="column">
       <Heading as="h1" size={{ initial: "7", lg: "8" }}>
         Editing Product: {product.name}
       </Heading>

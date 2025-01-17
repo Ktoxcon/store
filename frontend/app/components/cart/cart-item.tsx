@@ -10,6 +10,7 @@ import {
   Text,
   type BoxProps,
 } from "@radix-ui/themes";
+import { QuetzalCurrencyFormatter } from "@store/lib/fomatters/currency";
 import { useShoppingCart } from "@store/lib/hooks/use-shopping-cart";
 import type { CartItem } from "@store/lib/types/order-item";
 
@@ -46,6 +47,9 @@ export function CartItemCard({
           <Flex p="4" gap="2" justify="between" direction="column">
             <Text as="p" truncate>
               {item.name}
+            </Text>
+            <Text>
+              <Strong>{QuetzalCurrencyFormatter.format(item.price)}</Strong>
             </Text>
             <Text>
               <Strong>x{item.quantity}</Strong>

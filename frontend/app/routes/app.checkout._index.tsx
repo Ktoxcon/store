@@ -1,5 +1,6 @@
-import { Heading, Section } from "@radix-ui/themes";
+import { Flex, Heading, Section } from "@radix-ui/themes";
 import { CartSummary } from "@store/components/cart/cart-summary";
+import { CheckoutSummary } from "@store/components/cart/checkout-summary";
 import { PlaceOrderForm } from "@store/components/orders/place-order-form";
 import { listCustomerAddresses } from "@store/lib/actions/addresses.actions";
 import { createOrder } from "@store/lib/actions/orders.actions";
@@ -51,9 +52,17 @@ export default function Checkout({
   return (
     <>
       <PlaceOrderForm addresses={items} />
-      <Section>
-        <Heading>Products</Heading>
-        <CartSummary products={products} maxWidth={{ lg: "50%" }} />
+      <Section asChild>
+        <Flex direction="column" gap="4">
+          <Heading>Summary</Heading>
+          <CheckoutSummary />
+        </Flex>
+      </Section>
+      <Section asChild>
+        <Flex direction="column" gap="4">
+          <Heading>Products</Heading>
+          <CartSummary products={products} maxWidth={{ lg: "50%" }} />
+        </Flex>
       </Section>
     </>
   );
